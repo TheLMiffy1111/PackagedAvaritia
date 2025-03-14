@@ -1,0 +1,26 @@
+{
+	"name": "Extreme Crafting",
+	"category": "packagedauto:recipe",
+	"icon": "packagedavaritia:extreme_crafter",
+	"pages": [
+		{
+			"type": "text",
+			"text": "$(thing)Extreme Crafting/$ is a crafting recipe type that uses the $(item)Extreme Package Crafter/$ to craft recipes craftable in an $(item)Extreme Crafting Table/$.$(p)Items crafted by the $(item)Extreme Package Crafter/$ will be ejected into adjacent inventories.$(p)The $(item)Extreme Package Crafter/$ requires power."
+		},
+		{
+			"type": "spotlight",
+			"flag": "mod:appliedenergistics2",
+			"item": "packagedavaritia:extreme_crafter",
+			"link_recipe": true,
+			"title": "AE2 Integration",
+			"text": "The $(item)Extreme Package Crafter/$ can be connected to an $(thing)ME Network/$.$(p)It will extract power to use, and instead eject crafted items into the network."
+		},
+		{
+			"type": "crafting",
+			"recipe": "packagedavaritia:extreme_crafter",
+			"title": "Crafting"
+		}
+	],
+	"read_by_default": true,
+	"sortnum": 1503
+}
