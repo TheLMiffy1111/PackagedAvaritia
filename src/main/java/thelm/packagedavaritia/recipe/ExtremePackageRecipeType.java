@@ -4,11 +4,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import avaritia.block.ModBlocks;
-import avaritia.recipe.ShapedExtremeCraftingRecipe;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.ints.IntList;
 import it.unimi.dsi.fastutil.ints.IntRBTreeSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.core.Vec3i;
@@ -71,22 +68,8 @@ public class ExtremePackageRecipeType implements IPackageRecipeType {
 	public Int2ObjectMap<ItemStack> getRecipeTransferMap(IRecipeSlotsViewWrapper recipeLayoutWrapper) {
 		Int2ObjectMap<ItemStack> map = new Int2ObjectOpenHashMap<>();
 		List<IRecipeSlotViewWrapper> slotViews = recipeLayoutWrapper.getRecipeSlotViews();
-		int width = 9;
-		int height = 9;
-		IntList slots = new IntArrayList(81);
-		if(recipeLayoutWrapper.getRecipe() instanceof ShapedExtremeCraftingRecipe recipe) {
-			width = recipe.getWidth();
-			height = recipe.getHeight();
-		}
-		int widthOffset = (9-width)/2;
-		int heightOffset = (9-height)/2;
-		for(int i = heightOffset; i < heightOffset+height; ++i) {
-			for(int j = widthOffset; j < widthOffset+width; ++j) {
-				slots.add(9*i+j);
-			}
-		}
 		int index = 0;
-		int[] slotArray = slots.toIntArray();
+		int[] slotArray = SLOTS.toIntArray();
 		for(IRecipeSlotViewWrapper slotView : slotViews) {
 			if(slotView.isInput()) {
 				Object displayed = slotView.getDisplayedIngredient().orElse(null);
@@ -95,7 +78,7 @@ public class ExtremePackageRecipeType implements IPackageRecipeType {
 				}
 				++index;
 			}
-			if(index >= slots.size()) {
+			if(index >= 81) {
 				break;
 			}
 		}
