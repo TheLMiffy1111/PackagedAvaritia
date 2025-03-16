@@ -197,7 +197,7 @@ publishMods {
 		accessToken = providers.gradleProperty("curseforge.token")
 		projectId = "308383"
 		minecraftVersions.add(mcVersion)
-		requires "packagedauto", "re-avaritia"
+		requires "packagedauto", "avaritia-universal"
 		optional "applied-energistics-2"
 	}
 
@@ -205,7 +205,7 @@ publishMods {
 		accessToken = providers.gradleProperty("modrinth.token")
 		projectId = "aA94MQL4"
 		minecraftVersions.add(mcVersion)
-		requires "packagedauto", "re-avaritia"
+		requires "packagedauto"
 		optional "ae2"
 	}
 }
