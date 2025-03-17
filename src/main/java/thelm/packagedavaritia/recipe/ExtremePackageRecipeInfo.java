@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import committee.nova.mods.avaritia.common.crafting.recipe.ICraftRecipe;
-import committee.nova.mods.avaritia.init.registry.ModRecipeTypes;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +14,8 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
+import nova.committee.avaritia.common.crafting.recipe.ICraftRecipe;
+import nova.committee.avaritia.init.registry.ModRecipeTypes;
 import thelm.packagedauto.api.IPackagePattern;
 import thelm.packagedauto.api.IPackageRecipeType;
 import thelm.packagedauto.util.MiscHelper;
@@ -113,7 +113,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 			toSet.setCount(1);
 			matrix.setItem(i, toSet.copy());
 		}
-		ICraftRecipe recipe = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(ModRecipeTypes.EXTREME_CRAFT_RECIPE.get(), matrix, level).orElse(null);
+		ICraftRecipe recipe = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(ModRecipeTypes.RecipeTypes.EXTREME_CRAFTING, matrix, level).orElse(null);
 		if(recipe != null) {
 			this.recipe = recipe;
 			this.input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));

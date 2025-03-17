@@ -2,9 +2,9 @@ package thelm.packagedavaritia.recipe;
 
 import java.util.List;
 
-import committee.nova.mods.avaritia.common.crafting.recipe.ICraftRecipe;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import nova.committee.avaritia.common.crafting.recipe.ICraftRecipe;
 import thelm.packagedauto.api.IPackageRecipeInfo;
 
 public interface IExtremePackageRecipeInfo extends IPackageRecipeInfo {

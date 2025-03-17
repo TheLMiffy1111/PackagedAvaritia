@@ -70,14 +70,14 @@ sourceSets {
 	main
 }
 
-def mcVersion = "1.19.2"
+def mcVersion = "1.18.2"
 def modName = "PackagedAvaritia-Re"
 def modId = "packagedavaritia"
 def specVersion = "2"
 def vendor = "thelm"
 
 group = "thelm.packagedavaritia"
-version = "2.1.0.7"
+version = "2.0.0.0"
 
 archivesBaseName = "${modName}-${mcVersion}"
 
@@ -107,30 +107,30 @@ dependencies {
 	implementation "org.apache.logging.log4j:log4j-core:2.24.1"
 
 	// Minecraft
-	minecraft "com.mojang:minecraft:1.19.2"
+	minecraft "com.mojang:minecraft:1.18.2"
 	mappings loom.layered {
 		officialMojangMappings()
-		parchment "org.parchmentmc.data:parchment-1.19.2:2022.11.27@zip"
+		parchment "org.parchmentmc.data:parchment-1.18.2:2022.11.06@zip"
 	}
-	forge "net.minecraftforge:forge:1.19.2-43.4.2"
+	forge "net.minecraftforge:forge:1.18.2-40.2.21"
 
 	// Dependencies
-	modImplementation "thelm.packagedauto:PackagedAuto-1.19.2:3.2.14.45"
-	modImplementation "curse.maven:re-avaritia-623969:4864671"
-	modImplementation("mezz.jei:jei-1.19.2-forge:11.8.1.1034") {transitive = false}
-	modImplementation "appeng:appliedenergistics2-forge:12.9.12"
-	modImplementation "vazkii.patchouli:Patchouli:1.19.2-77"
+	modImplementation "thelm.packagedauto:PackagedAuto-1.18.2:3.1.14.56"
+	modImplementation "curse.maven:re-avaritia-623969:3866842"
+	modImplementation("mezz.jei:jei-1.18.2-forge:10.2.1.1009") {transitive = false}
+	modImplementation "appeng:appliedenergistics2-forge:11.7.6"
+	modImplementation "vazkii.patchouli:Patchouli:1.18.2-71.1"
 
 	// Testing
-	modImplementation "mekanism:Mekanism:1.19.2-10.3.9.13"
-	modImplementation "curse.maven:applied-mekanistics-574300:4734608"
+	modImplementation "mekanism:Mekanism:1.18.2-10.2.5.465"
+	modImplementation "curse.maven:applied-mekanistics-574300:3968835"
 
 	// Performance
-	modImplementation "curse.maven:yeetusexperimentus-635427:3909789"
+	modImplementation "curse.maven:yeetusexperimentus-635427:4377180"
 	implementation "io.github.llamalad7:mixinextras-forge:0.3.6"
-	modImplementation "curse.maven:modernfix-790626:5803581"
-	modImplementation "curse.maven:ferritecore-429235:4117906"
-	modImplementation "curse.maven:lazy-dfu-forge-460819:4327266"
+	modImplementation "curse.maven:modernfix-790626:5399365"
+	modImplementation "curse.maven:ferritecore-429235:4074294"
+	modImplementation "curse.maven:lazy-dfu-forge-460819:3544496"
 }
 
 def replacements = [
