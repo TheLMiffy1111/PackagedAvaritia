@@ -1,11 +1,14 @@
 package thelm.packagedavaritia.recipe;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.yuo.endless.Recipe.ExtremeCraftShpaelessManager;
 import com.yuo.endless.Recipe.ExtremeCraftingManager;
 import com.yuo.endless.Recipe.IExtremeCraftRecipe;
+import com.yuo.endless.Recipe.ModRecipeManager;
 import com.yuo.endless.Recipe.RecipeTypeRegistry;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -14,6 +17,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
@@ -36,11 +40,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 		input.clear();
 		output = ItemStack.EMPTY;
 		patterns.clear();
-		IRecipe<?> recipe = MiscHelper.INSTANCE.getRecipeManager().byKey(new ResourceLocation(nbt.getString("Recipe"))).orElse(null);
-		if(recipe == null) {
-			recipe = ExtremeCraftingManager.getInstance().getRecipeList().stream().
-					filter(r->r.getId().equals(new ResourceLocation(nbt.getString("Recipe")))).findFirst().orElse(null);
-		}
+		IRecipe<?> recipe = getRecipe(new ResourceLocation(nbt.getString("Recipe")));
 		List<ItemStack> matrixList = new ArrayList<>();
 		MiscHelper.INSTANCE.loadAllItems(nbt.getList("Matrix", 10), matrixList);
 		for(int i = 0; i < 81 && i < matrixList.size(); ++i) {
@@ -120,11 +120,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 			toSet.setCount(1);
 			matrix.setItem(i, toSet.copy());
 		}
-		IExtremeCraftRecipe recipe = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(RecipeTypeRegistry.EXTREME_CRAFT_RECIPE, matrix, world).orElse(null);
-		if(recipe == null) {
-			recipe = ExtremeCraftingManager.getInstance().getRecipeList().stream().
-					filter(r->r.checkRecipe(matrix, world)).findFirst().orElse(null);
-		}
+		IExtremeCraftRecipe recipe = getRecipe(matrix, world);
 		if(recipe != null) {
 			this.recipe = recipe;
 			this.input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));
@@ -158,5 +154,64 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 	@Override
 	public int hashCode() {
 		return MiscHelper.INSTANCE.recipeHashCode(this, recipe);
+	}
+
+	// What are you doing
+	public static IExtremeCraftRecipe getRecipe(ResourceLocation id) {
+		RecipeManager recipeManager = MiscHelper.INSTANCE.getRecipeManager();
+		IRecipe<?> recipe = null;
+		{
+			recipe = recipeManager.byKey(id).orElse(null);
+		}
+		if(recipe == null) {
+			try {
+				Field[] fields = ModRecipeManager.class.getFields();
+				for(Field field : fields) {
+					if(IRecipe.class.isAssignableFrom(field.getType())) {
+						IRecipe<?> fieldRecipe = (IRecipe<?>)field.get(null);
+						if(fieldRecipe.getId().equals(id)) {
+							recipe = fieldRecipe;
+						}
+					}
+				}
+			}
+			catch(Exception e) {}
+		}
+		if(recipe == null) {
+			recipe = ExtremeCraftingManager.getInstance().getRecipeList().stream().
+					filter(r->r.getId().equals(id)).findFirst().orElse(null);
+		}
+		if(recipe == null) {
+			recipe = ExtremeCraftShpaelessManager.getInstance().getRecipeList().stream().
+					filter(r->r.getId().equals(id)).findFirst().orElse(null);
+		}
+		if(recipe instanceof IExtremeCraftRecipe) {
+			return (IExtremeCraftRecipe)recipe;
+		}
+		return null;
+	}
+
+	// What are you doing
+	public static IExtremeCraftRecipe getRecipe(IInventory matrix, World world) {
+		RecipeManager recipeManager = MiscHelper.INSTANCE.getRecipeManager();
+		IExtremeCraftRecipe recipe = null;
+		{
+			recipe = recipeManager.getRecipeFor(RecipeTypeRegistry.EXTREME_CRAFT_RECIPE, matrix, world).orElse(null);
+		}
+		if(recipe == null) {
+			recipe = recipeManager.getRecipeFor(RecipeTypeRegistry.EXTREME_CRAFT_SHAPE_RECIPE, matrix, world).orElse(null);
+		}
+		if(recipe == null) {
+			recipe = ModRecipeManager.matchesRecipe(matrix, world);
+		}
+		if(recipe == null) {
+			recipe = ExtremeCraftingManager.getInstance().getRecipeList().stream().
+					filter(r->r.matches(matrix, world)).findFirst().orElse(null);
+		}
+		if(recipe == null) {
+			recipe = ExtremeCraftShpaelessManager.getInstance().getRecipeList().stream().
+					filter(r->r.matches(matrix, world)).findFirst().orElse(null);
+		}
+		return recipe;
 	}
 }

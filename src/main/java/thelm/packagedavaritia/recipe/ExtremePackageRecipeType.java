@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import com.google.common.collect.ImmutableList;
 import com.yuo.endless.Blocks.EndlessBlocks;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -26,7 +27,9 @@ public class ExtremePackageRecipeType implements IPackageRecipeType {
 	public static final ExtremePackageRecipeType INSTANCE = new ExtremePackageRecipeType();
 	public static final ResourceLocation NAME = new ResourceLocation("packagedavaritia:extreme");
 	public static final IntSet SLOTS;
-	public static final List<ResourceLocation> CATEGORIES = Collections.singletonList(new ResourceLocation("endless:extreme_craft"));
+	public static final List<ResourceLocation> CATEGORIES = ImmutableList.of(
+			new ResourceLocation("endless:extreme_craft"),
+			new ResourceLocation("endless:extreme_craft_shape"));
 	public static final Vector3i COLOR = new Vector3i(139, 139, 139);
 	public static final Vector3i COLOR_DISABLED = new Vector3i(64, 64, 64);
 
