@@ -1,28 +1,29 @@
 package thelm.packagedavaritia.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import thelm.packagedavaritia.block.entity.ExtremeCrafterBlockEntity;
 
 public class PackagedAvaritiaConfig {
 
 	private PackagedAvaritiaConfig() {}
 
-	private static ForgeConfigSpec serverSpec;
+	private static ModConfigSpec serverSpec;
 
-	public static ForgeConfigSpec.IntValue extremeCrafterEnergyCapacity;
-	public static ForgeConfigSpec.IntValue extremeCrafterEnergyReq;
-	public static ForgeConfigSpec.IntValue extremeCrafterEnergyUsage;
-	public static ForgeConfigSpec.BooleanValue extremeCrafterDrawMEEnergy;
+	public static ModConfigSpec.IntValue extremeCrafterEnergyCapacity;
+	public static ModConfigSpec.IntValue extremeCrafterEnergyReq;
+	public static ModConfigSpec.IntValue extremeCrafterEnergyUsage;
+	public static ModConfigSpec.BooleanValue extremeCrafterDrawMEEnergy;
 
-	public static void registerConfig() {
+	public static void registerConfig(ModContainer modContainer) {
 		buildConfig();
-		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, serverSpec);
+		modContainer.registerConfig(ModConfig.Type.SERVER, serverSpec);
 	}
 
 	private static void buildConfig() {
-		ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+		ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
 
 		builder.push("extreme_crafter");
 		builder.comment("How much FE the Extreme Package Crafter should hold.");

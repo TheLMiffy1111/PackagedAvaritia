@@ -14,19 +14,17 @@ import net.minecraft.world.level.material.MapColor;
 import thelm.packagedauto.block.BaseBlock;
 import thelm.packagedauto.block.entity.BaseBlockEntity;
 import thelm.packagedavaritia.block.entity.ExtremeCrafterBlockEntity;
+import thelm.packagedavaritia.block.entity.PackagedAvaritiaBlockEntities;
 
 public class ExtremeCrafterBlock extends BaseBlock {
 
-	public static final ExtremeCrafterBlock INSTANCE = new ExtremeCrafterBlock();
-	public static final Item ITEM_INSTANCE = new BlockItem(INSTANCE, new Item.Properties());
-
-	public ExtremeCrafterBlock() {
+	protected ExtremeCrafterBlock() {
 		super(BlockBehaviour.Properties.of().strength(15F, 25F).mapColor(MapColor.METAL).sound(SoundType.METAL));
 	}
 
 	@Override
 	public ExtremeCrafterBlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return ExtremeCrafterBlockEntity.TYPE_INSTANCE.create(pos, state);
+		return PackagedAvaritiaBlockEntities.EXTREME_CRAFTER.get().create(pos, state);
 	}
 
 	@Override
