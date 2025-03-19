@@ -5,7 +5,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import thelm.packagedavaritia.client.screen.ExtremeCrafterScreen;
-import thelm.packagedavaritia.menu.ExtremeCrafterContainer;
+import thelm.packagedavaritia.container.ExtremeCrafterContainer;
 
 public class ClientEventHandler {
 

@@ -26,9 +26,9 @@ import thelm.packagedauto.tile.BaseTile;
 import thelm.packagedauto.tile.UnpackagerTile;
 import thelm.packagedauto.util.MiscHelper;
 import thelm.packagedavaritia.block.ExtremeCrafterBlock;
+import thelm.packagedavaritia.container.ExtremeCrafterContainer;
 import thelm.packagedavaritia.integration.appeng.tile.AEExtremeCrafterTile;
 import thelm.packagedavaritia.inventory.ExtremeCrafterItemHandler;
-import thelm.packagedavaritia.menu.ExtremeCrafterContainer;
 import thelm.packagedavaritia.recipe.IExtremePackageRecipeInfo;
 
 public class ExtremeCrafterTile extends BaseTile implements ITickableTileEntity, IPackageCraftingMachine {

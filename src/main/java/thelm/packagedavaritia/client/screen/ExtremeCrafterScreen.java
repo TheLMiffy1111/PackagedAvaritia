@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import thelm.packagedauto.client.screen.BaseScreen;
-import thelm.packagedavaritia.menu.ExtremeCrafterContainer;
+import thelm.packagedavaritia.container.ExtremeCrafterContainer;
 
 public class ExtremeCrafterScreen extends BaseScreen<ExtremeCrafterContainer> {
 

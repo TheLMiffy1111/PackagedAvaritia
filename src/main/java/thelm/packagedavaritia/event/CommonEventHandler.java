@@ -13,7 +13,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import thelm.packagedauto.util.ApiImpl;
 import thelm.packagedavaritia.block.ExtremeCrafterBlock;
 import thelm.packagedavaritia.config.PackagedAvaritiaConfig;
-import thelm.packagedavaritia.menu.ExtremeCrafterContainer;
+import thelm.packagedavaritia.container.ExtremeCrafterContainer;
 import thelm.packagedavaritia.recipe.ExtremePackageRecipeType;
 import thelm.packagedavaritia.tile.ExtremeCrafterTile;
 
