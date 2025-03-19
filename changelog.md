@@ -1,1 +1,1 @@
-Redo recipe lookup (cursed)  
+Record method used to get recipe  

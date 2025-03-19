@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.yuo.endless.Recipe.ExtremeCraftShpaelessManager;
 import com.yuo.endless.Recipe.ExtremeCraftingManager;
 import com.yuo.endless.Recipe.IExtremeCraftRecipe;
@@ -30,6 +32,7 @@ import thelm.packagedauto.util.PackagePattern;
 public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 
 	IExtremeCraftRecipe recipe;
+	byte method;
 	List<ItemStack> input = new ArrayList<>();
 	IInventory matrix = new Inventory(81);
 	ItemStack output = ItemStack.EMPTY;
@@ -40,15 +43,16 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 		input.clear();
 		output = ItemStack.EMPTY;
 		patterns.clear();
-		IRecipe<?> recipe = getRecipe(new ResourceLocation(nbt.getString("Recipe")));
+		Pair<IExtremeCraftRecipe, Byte> recipeInfo = getRecipe(new ResourceLocation(nbt.getString("Recipe")), nbt.getByte("Method"));
 		List<ItemStack> matrixList = new ArrayList<>();
 		MiscHelper.INSTANCE.loadAllItems(nbt.getList("Matrix", 10), matrixList);
 		for(int i = 0; i < 81 && i < matrixList.size(); ++i) {
 			matrix.setItem(i, matrixList.get(i));
 		}
-		if(recipe instanceof IExtremeCraftRecipe) {
-			this.recipe = (IExtremeCraftRecipe)recipe;
-			output = this.recipe.assemble(matrix).copy();
+		if(recipeInfo.getLeft() != null) {
+			recipe = recipeInfo.getLeft();
+			method = recipeInfo.getRight();
+			output = recipe.assemble(matrix).copy();
 		}
 		input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));
 		for(int i = 0; i*9 < input.size(); ++i) {
@@ -60,6 +64,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 	public CompoundNBT write(CompoundNBT nbt) {
 		if(recipe != null) {
 			nbt.putString("Recipe", recipe.getId().toString());
+			nbt.putByte("Method", method);
 		}
 		List<ItemStack> matrixList = new ArrayList<>();
 		for(int i = 0; i < 81; ++i) {
@@ -120,9 +125,10 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 			toSet.setCount(1);
 			matrix.setItem(i, toSet.copy());
 		}
-		IExtremeCraftRecipe recipe = getRecipe(matrix, world);
-		if(recipe != null) {
-			this.recipe = recipe;
+		Pair<IExtremeCraftRecipe, Byte> recipeInfo = getRecipe(matrix, world);
+		if(recipeInfo.getLeft() != null) {
+			recipe = recipeInfo.getLeft();
+			method = recipeInfo.getRight();
 			this.input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));
 			this.output = recipe.assemble(matrix).copy();
 			for(int i = 0; i*9 < this.input.size(); ++i) {
@@ -156,62 +162,78 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 		return MiscHelper.INSTANCE.recipeHashCode(this, recipe);
 	}
 
-	// What are you doing
-	public static IExtremeCraftRecipe getRecipe(ResourceLocation id) {
+	// Why do I have to do this
+	public static Pair<IExtremeCraftRecipe, Byte> getRecipe(ResourceLocation id, byte method) {
 		RecipeManager recipeManager = MiscHelper.INSTANCE.getRecipeManager();
-		IRecipe<?> recipe = null;
-		{
-			recipe = recipeManager.byKey(id).orElse(null);
+		IExtremeCraftRecipe recipe = null;
+		if(method == 0 || method == 1) {
+			IRecipe<?> iRecipe = recipeManager.byKey(id).orElse(null);
+			if(iRecipe instanceof IExtremeCraftRecipe) {
+				recipe = (IExtremeCraftRecipe)iRecipe;
+				method = 1;
+			}
 		}
-		if(recipe == null) {
+		if(recipe == null && (method == 0 || method == 2)) {
 			try {
 				Field[] fields = ModRecipeManager.class.getFields();
 				for(Field field : fields) {
-					if(IRecipe.class.isAssignableFrom(field.getType())) {
-						IRecipe<?> fieldRecipe = (IRecipe<?>)field.get(null);
+					if(IExtremeCraftRecipe.class.isAssignableFrom(field.getType())) {
+						IExtremeCraftRecipe fieldRecipe = (IExtremeCraftRecipe)field.get(null);
 						if(fieldRecipe.getId().equals(id)) {
 							recipe = fieldRecipe;
+							method = 2;
 						}
 					}
 				}
 			}
 			catch(Exception e) {}
 		}
-		if(recipe == null) {
+		if(recipe == null && (method == 0 || method == 3)) {
 			recipe = ExtremeCraftingManager.getInstance().getRecipeList().stream().
 					filter(r->r.getId().equals(id)).findFirst().orElse(null);
+			method = 3;
 		}
-		if(recipe == null) {
+		if(recipe == null && (method == 0 || method == 4)) {
 			recipe = ExtremeCraftShpaelessManager.getInstance().getRecipeList().stream().
 					filter(r->r.getId().equals(id)).findFirst().orElse(null);
+			method = 4;
 		}
-		if(recipe instanceof IExtremeCraftRecipe) {
-			return (IExtremeCraftRecipe)recipe;
+		if(recipe == null) {
+			method = 0;
 		}
-		return null;
+		return Pair.of(recipe, method);
 	}
 
-	// What are you doing
-	public static IExtremeCraftRecipe getRecipe(IInventory matrix, World world) {
+	// Why do I have to do this
+	public static Pair<IExtremeCraftRecipe, Byte> getRecipe(IInventory matrix, World world) {
 		RecipeManager recipeManager = MiscHelper.INSTANCE.getRecipeManager();
 		IExtremeCraftRecipe recipe = null;
+		byte method = 0;
 		{
 			recipe = recipeManager.getRecipeFor(RecipeTypeRegistry.EXTREME_CRAFT_RECIPE, matrix, world).orElse(null);
+			method = 1;
 		}
 		if(recipe == null) {
 			recipe = recipeManager.getRecipeFor(RecipeTypeRegistry.EXTREME_CRAFT_SHAPE_RECIPE, matrix, world).orElse(null);
+			method = 1;
 		}
 		if(recipe == null) {
 			recipe = ModRecipeManager.matchesRecipe(matrix, world);
+			method = 2;
 		}
 		if(recipe == null) {
 			recipe = ExtremeCraftingManager.getInstance().getRecipeList().stream().
 					filter(r->r.matches(matrix, world)).findFirst().orElse(null);
+			method = 3;
 		}
 		if(recipe == null) {
 			recipe = ExtremeCraftShpaelessManager.getInstance().getRecipeList().stream().
 					filter(r->r.matches(matrix, world)).findFirst().orElse(null);
+			method = 4;
 		}
-		return recipe;
+		if(recipe == null) {
+			method = 0;
+		}
+		return Pair.of(recipe, method);
 	}
 }
