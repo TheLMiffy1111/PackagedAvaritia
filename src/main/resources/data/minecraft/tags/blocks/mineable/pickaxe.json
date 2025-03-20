@@ -1,6 +1,9 @@
 {
 	"replace": false,
 	"values": [
+		"packagedavaritia:sculk_crafter",
+		"packagedavaritia:nether_crafter",
+		"packagedavaritia:end_crafter",
 		"packagedavaritia:extreme_crafter"
 	]
 }

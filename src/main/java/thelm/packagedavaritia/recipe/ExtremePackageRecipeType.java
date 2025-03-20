@@ -3,7 +3,7 @@ package thelm.packagedavaritia.recipe;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import committee.nova.mods.avaritia.common.crafting.recipe.ShapedExtremeCraftingRecipe;
+import committee.nova.mods.avaritia.common.crafting.recipe.ShapedTableCraftingRecipe;
 import committee.nova.mods.avaritia.init.registry.ModBlocks;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -74,7 +74,7 @@ public class ExtremePackageRecipeType implements IPackageRecipeType {
 		int width = 9;
 		int height = 9;
 		IntList slots = new IntArrayList(81);
-		if(recipeLayoutWrapper.getRecipe() instanceof ShapedExtremeCraftingRecipe recipe) {
+		if(recipeLayoutWrapper.getRecipe() instanceof ShapedTableCraftingRecipe recipe) {
 			width = recipe.getWidth();
 			height = recipe.getHeight();
 		}

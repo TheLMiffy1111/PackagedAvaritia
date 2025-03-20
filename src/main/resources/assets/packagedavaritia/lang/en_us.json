@@ -1,8 +1,17 @@
 {
 	"itemGroup.packagedavaritia": "PackagedAvaritia",
-	
+
+	"block.packagedavaritia.sculk_crafter": "Sculk Package Crafter",
+	"block.packagedavaritia.nether_crafter": "Nether Package Crafter",
+	"block.packagedavaritia.end_crafter": "End Package Crafter",
 	"block.packagedavaritia.extreme_crafter": "Extreme Package Crafter",
 
+	"recipe.packagedavaritia.sculk": "Sculk Crafting",
+	"recipe.packagedavaritia.sculk.short": "Sculk",
+	"recipe.packagedavaritia.nether": "Nether Crafting",
+	"recipe.packagedavaritia.nether.short": "Nether",
+	"recipe.packagedavaritia.end": "End Crafting",
+	"recipe.packagedavaritia.end.short": "End",
 	"recipe.packagedavaritia.extreme": "Extreme Crafting",
 	"recipe.packagedavaritia.extreme.short": "Extreme"
 }

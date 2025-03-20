@@ -1,0 +1,8 @@
+{
+	"parent": "block/cube_bottom_top",
+	"textures": {
+		"side": "packagedavaritia:block/nether_crafter_side",
+		"top": "packagedavaritia:block/nether_crafter_top",
+		"bottom": "packagedavaritia:block/nether_crafter_bottom"
+	}
+}

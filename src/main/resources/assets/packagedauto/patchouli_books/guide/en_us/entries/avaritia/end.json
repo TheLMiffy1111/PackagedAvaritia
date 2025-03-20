@@ -1,0 +1,33 @@
+{
+	"name": "End Crafting",
+	"category": "packagedauto:recipe",
+	"icon": "packagedavaritia:end_crafter",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "$(thing)End Crafting/$ is a crafting recipe type that uses the $(item)End Package Crafter/$ to craft recipes craftable in an $(item)End Crafting Table/$.$(p)Items crafted by the $(item)End Package Crafter/$ will be ejected into adjacent inventories.$(p)The $(item)End Package Crafter/$ requires power."
+		},
+		{
+			"type": "patchouli:spotlight",
+			"flag": "mod:ae2",
+			"item": "packagedavaritia:end_crafter",
+			"link_recipe": true,
+			"title": "AE2 Integration",
+			"text": "The $(item)End Package Crafter/$ can be connected to an $(thing)ME Network/$.$(p)It will extract power to use, and instead eject crafted items into the network."
+		},
+		{
+			"type": "patchouli:crafting",
+			"flag": "!mod:ae2",
+			"recipe": "packagedavaritia:end_crafter",
+			"title": "Crafting"
+		},
+		{
+			"type": "patchouli:crafting",
+			"flag": "mod:ae2",
+			"recipe": "packagedavaritia:end_crafter_ae",
+			"title": "Crafting"
+		}
+	],
+	"read_by_default": true,
+	"sortnum": 1503
+}

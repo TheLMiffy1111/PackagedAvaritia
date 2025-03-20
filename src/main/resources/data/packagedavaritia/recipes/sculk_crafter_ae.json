@@ -1,0 +1,35 @@
+{
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "ae2"
+		}
+	],
+	"type": "minecraft:crafting_shaped",
+	"result": {
+		"item": "packagedavaritia:sculk_crafter",
+		"count": 1
+	},
+	"pattern": [
+		"SCS",
+		"RTR",
+		"SHS"
+	],
+	"key": {
+		"C": {
+			"item": "packagedauto:me_package_component"
+		},
+		"T": {
+			"item": "avaritia:sculk_crafting_table"
+		},
+		"H": {
+			"item": "minecraft:hopper"
+		},
+		"S": {
+			"item": "minecraft:sculk"
+		},
+		"R": {
+			"tag": "forge:dusts/redstone"
+		}
+	}
+}

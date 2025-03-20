@@ -1,0 +1,8 @@
+{
+	"parent": "block/cube_bottom_top",
+	"textures": {
+		"side": "packagedavaritia:block/sculk_crafter_side",
+		"top": "packagedavaritia:block/sculk_crafter_top",
+		"bottom": "packagedavaritia:block/sculk_crafter_bottom"
+	}
+}

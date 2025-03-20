@@ -1,0 +1,33 @@
+{
+	"name": "Sculk Crafting",
+	"category": "packagedauto:recipe",
+	"icon": "packagedavaritia:sculk_crafter",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "$(thing)Sculk Crafting/$ is a crafting recipe type that uses the $(item)Sculk Package Crafter/$ to craft recipes craftable in an $(item)Sculk Crafting Table/$.$(p)Items crafted by the $(item)Sculk Package Crafter/$ will be ejected into adjacent inventories.$(p)The $(item)Sculk Package Crafter/$ requires power."
+		},
+		{
+			"type": "patchouli:spotlight",
+			"flag": "mod:ae2",
+			"item": "packagedavaritia:sculk_crafter",
+			"link_recipe": true,
+			"title": "AE2 Integration",
+			"text": "The $(item)Sculk Package Crafter/$ can be connected to an $(thing)ME Network/$.$(p)It will extract power to use, and instead eject crafted items into the network."
+		},
+		{
+			"type": "patchouli:crafting",
+			"flag": "!mod:ae2",
+			"recipe": "packagedavaritia:sculk_crafter",
+			"title": "Crafting"
+		},
+		{
+			"type": "patchouli:crafting",
+			"flag": "mod:ae2",
+			"recipe": "packagedavaritia:sculk_crafter_ae",
+			"title": "Crafting"
+		}
+	],
+	"read_by_default": true,
+	"sortnum": 1501
+}

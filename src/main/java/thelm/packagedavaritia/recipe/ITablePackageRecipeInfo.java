@@ -2,16 +2,18 @@ package thelm.packagedavaritia.recipe;
 
 import java.util.List;
 
-import committee.nova.mods.avaritia.api.common.crafting.ISpecialRecipe;
+import committee.nova.mods.avaritia.common.crafting.recipe.BaseTableCraftingRecipe;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import thelm.packagedauto.api.IPackageRecipeInfo;
 
-public interface IExtremePackageRecipeInfo extends IPackageRecipeInfo {
+public interface ITablePackageRecipeInfo extends IPackageRecipeInfo {
+
+	int getTier();
 
 	ItemStack getOutput();
 
-	ISpecialRecipe getRecipe();
+	BaseTableCraftingRecipe getRecipe();
 
 	Container getMatrix();
 

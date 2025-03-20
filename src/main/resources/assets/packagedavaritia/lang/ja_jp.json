@@ -1,8 +1,17 @@
 {
 	"itemGroup.packagedavaritia": "PackagedAvaritia",
-	
+
+	"block.packagedavaritia.sculk_crafter": "スカルク梱包クラフター",
+	"block.packagedavaritia.nether_crafter": "ネザー梱包クラフター",
+	"block.packagedavaritia.end_crafter": "エンド梱包クラフター",
 	"block.packagedavaritia.extreme_crafter": "エクストリーム梱包クラフター",
 
+	"recipe.packagedavaritia.sculk": "スカルククラフト",
+	"recipe.packagedavaritia.sculk.short": "スカルク",
+	"recipe.packagedavaritia.nether": "ネザークラフト",
+	"recipe.packagedavaritia.nether.short": "ネザー",
+	"recipe.packagedavaritia.end": "エンドクラフト",
+	"recipe.packagedavaritia.end.short": "エンド",
 	"recipe.packagedavaritia.extreme": "エクストリームクラフト",
 	"recipe.packagedavaritia.extreme.short": "エクストリーム"
 }

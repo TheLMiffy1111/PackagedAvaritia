@@ -27,7 +27,7 @@ import thelm.packagedavaritia.block.ExtremeCrafterBlock;
 import thelm.packagedavaritia.integration.appeng.blockentity.AEExtremeCrafterBlockEntity;
 import thelm.packagedavaritia.inventory.ExtremeCrafterItemHandler;
 import thelm.packagedavaritia.menu.ExtremeCrafterMenu;
-import thelm.packagedavaritia.recipe.IExtremePackageRecipeInfo;
+import thelm.packagedavaritia.recipe.ITablePackageRecipeInfo;
 
 public class ExtremeCrafterBlockEntity extends BaseBlockEntity implements IPackageCraftingMachine {
 
@@ -44,7 +44,7 @@ public class ExtremeCrafterBlockEntity extends BaseBlockEntity implements IPacka
 
 	public boolean isWorking = false;
 	public int remainingProgress = 0;
-	public IExtremePackageRecipeInfo currentRecipe;
+	public ITablePackageRecipeInfo currentRecipe;
 
 	public ExtremeCrafterBlockEntity(BlockPos pos, BlockState state) {
 		super(TYPE_INSTANCE, pos, state);
@@ -76,18 +76,20 @@ public class ExtremeCrafterBlockEntity extends BaseBlockEntity implements IPacka
 
 	@Override
 	public boolean acceptPackage(IPackageRecipeInfo recipeInfo, List<ItemStack> stacks, Direction direction) {
-		if(!isBusy() && recipeInfo.isValid() && recipeInfo instanceof IExtremePackageRecipeInfo recipe) {
-			ItemStack slotStack = itemHandler.getStackInSlot(81);
-			ItemStack outputStack = recipe.getOutput();
-			if(slotStack.isEmpty() || ItemStack.isSameItemSameTags(slotStack, outputStack) && slotStack.getCount()+outputStack.getCount() <= outputStack.getMaxStackSize()) {
-				currentRecipe = recipe;
-				isWorking = true;
-				remainingProgress = energyReq;
-				for(int i = 0; i < 81; ++i) {
-					itemHandler.setStackInSlot(i, recipe.getMatrix().getItem(i).copy());
+		if(!isBusy() && recipeInfo.isValid() && recipeInfo instanceof ITablePackageRecipeInfo recipe) {
+			if(recipe.getTier() == 4) {
+				ItemStack slotStack = itemHandler.getStackInSlot(81);
+				ItemStack outputStack = recipe.getOutput();
+				if(slotStack.isEmpty() || ItemStack.isSameItemSameTags(slotStack, outputStack) && slotStack.getCount()+outputStack.getCount() <= outputStack.getMaxStackSize()) {
+					currentRecipe = recipe;
+					isWorking = true;
+					remainingProgress = energyReq;
+					for(int i = 0; i < 81; ++i) {
+						itemHandler.setStackInSlot(i, recipe.getMatrix().getItem(i).copy());
+					}
+					setChanged();
+					return true;
 				}
-				setChanged();
-				return true;
 			}
 		}
 		return false;
@@ -177,8 +179,8 @@ public class ExtremeCrafterBlockEntity extends BaseBlockEntity implements IPacka
 		if(nbt.contains("Recipe")) {
 			CompoundTag tag = nbt.getCompound("Recipe");
 			IPackageRecipeInfo recipe = MiscHelper.INSTANCE.loadRecipe(tag);
-			if(recipe instanceof IExtremePackageRecipeInfo extremeRecipe) {
-				currentRecipe = extremeRecipe;
+			if(recipe instanceof ITablePackageRecipeInfo tableRecipe && tableRecipe.getTier() == 4) {
+				currentRecipe = tableRecipe;
 			}
 		}
 	}

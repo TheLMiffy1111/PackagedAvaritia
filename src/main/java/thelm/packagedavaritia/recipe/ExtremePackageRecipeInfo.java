@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import committee.nova.mods.avaritia.api.common.crafting.ISpecialRecipe;
+import committee.nova.mods.avaritia.common.crafting.recipe.BaseTableCraftingRecipe;
 import committee.nova.mods.avaritia.init.registry.ModRecipeTypes;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -21,9 +22,9 @@ import thelm.packagedauto.api.IPackageRecipeType;
 import thelm.packagedauto.util.MiscHelper;
 import thelm.packagedauto.util.PackagePattern;
 
-public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
+public class ExtremePackageRecipeInfo implements ITablePackageRecipeInfo {
 
-	ISpecialRecipe recipe;
+	BaseTableCraftingRecipe recipe;
 	List<ItemStack> input = new ArrayList<>();
 	Container matrix = new SimpleContainer(81);
 	ItemStack output;
@@ -40,8 +41,8 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 		for(int i = 0; i < 81 && i < matrixList.size(); ++i) {
 			matrix.setItem(i, matrixList.get(i));
 		}
-		if(recipe instanceof ISpecialRecipe extremeRecipe) {
-			this.recipe = extremeRecipe;
+		if(recipe instanceof BaseTableCraftingRecipe tableRecipe) {
+			this.recipe = tableRecipe;
 			output = this.recipe.assemble(matrix, MiscHelper.INSTANCE.getRegistryAccess()).copy();
 		}
 		input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));
@@ -69,6 +70,11 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 	}
 
 	@Override
+	public int getTier() {
+		return 4;
+	}
+
+	@Override
 	public boolean isValid() {
 		return recipe != null;
 	}
@@ -89,7 +95,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 	}
 
 	@Override
-	public ISpecialRecipe getRecipe() {
+	public BaseTableCraftingRecipe getRecipe() {
 		return recipe;
 	}
 
@@ -113,7 +119,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 			toSet.setCount(1);
 			matrix.setItem(i, toSet.copy());
 		}
-		ISpecialRecipe recipe = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(ModRecipeTypes.EXTREME_CRAFT_RECIPE.get(), matrix, level).orElse(null);
+		BaseTableCraftingRecipe recipe = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(ModRecipeTypes.CRAFTING_TABLE_RECIPE.get(), matrix, level).orElse(null);
 		if(recipe != null) {
 			this.recipe = recipe;
 			this.input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));

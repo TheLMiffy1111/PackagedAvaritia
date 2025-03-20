@@ -1,8 +1,17 @@
 {
 	"itemGroup.packagedavaritia": "封包無盡貪婪",
-	
-	"block.packagedavaritia.extreme_crafter": "終極封包合成器",
 
-	"recipe.packagedavaritia.extreme": "終極合成",
-	"recipe.packagedavaritia.extreme.short": "終極"
+	"block.packagedavaritia.sculk_crafter": "伏聆封包合成器",
+	"block.packagedavaritia.nether_crafter": "煉獄封包合成器",
+	"block.packagedavaritia.end_crafter": "終末封包合成器",
+	"block.packagedavaritia.extreme_crafter": "終焉封包合成器",
+
+	"recipe.packagedavaritia.sculk": "伏聆合成",
+	"recipe.packagedavaritia.sculk.short": "伏聆",
+	"recipe.packagedavaritia.nether": "煉獄合成",
+	"recipe.packagedavaritia.nether.short": "煉獄",
+	"recipe.packagedavaritia.end": "終末合成",
+	"recipe.packagedavaritia.end.short": "終末",
+	"recipe.packagedavaritia.extreme": "終焉合成",
+	"recipe.packagedavaritia.extreme.short": "終焉"
 }
