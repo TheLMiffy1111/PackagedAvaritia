@@ -11,6 +11,8 @@ import thelm.packagedauto.api.IPackageRecipeInfo;
 
 public interface IExtremePackageRecipeInfo extends IPackageRecipeInfo {
 
+	int getTier();
+
 	ItemStack getOutput();
 
 	IExtremeCraftRecipe getRecipe();

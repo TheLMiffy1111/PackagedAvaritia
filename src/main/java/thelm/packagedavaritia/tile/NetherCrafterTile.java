@@ -25,37 +25,37 @@ import thelm.packagedauto.energy.EnergyStorage;
 import thelm.packagedauto.tile.BaseTile;
 import thelm.packagedauto.tile.UnpackagerTile;
 import thelm.packagedauto.util.MiscHelper;
-import thelm.packagedavaritia.block.ExtremeCrafterBlock;
-import thelm.packagedavaritia.container.ExtremeCrafterContainer;
-import thelm.packagedavaritia.integration.appeng.tile.AEExtremeCrafterTile;
-import thelm.packagedavaritia.inventory.ExtremeCrafterItemHandler;
+import thelm.packagedavaritia.block.NetherCrafterBlock;
+import thelm.packagedavaritia.container.NetherCrafterContainer;
+import thelm.packagedavaritia.integration.appeng.tile.AENetherCrafterTile;
+import thelm.packagedavaritia.inventory.NetherCrafterItemHandler;
 import thelm.packagedavaritia.recipe.IExtremePackageRecipeInfo;
 
-public class ExtremeCrafterTile extends BaseTile implements ITickableTileEntity, IPackageCraftingMachine {
+public class NetherCrafterTile extends BaseTile implements ITickableTileEntity, IPackageCraftingMachine {
 
-	public static final TileEntityType<ExtremeCrafterTile> TYPE_INSTANCE = (TileEntityType<ExtremeCrafterTile>)TileEntityType.Builder.
+	public static final TileEntityType<NetherCrafterTile> TYPE_INSTANCE = (TileEntityType<NetherCrafterTile>)TileEntityType.Builder.
 			of(MiscHelper.INSTANCE.conditionalSupplier(()->ModList.get().isLoaded("appliedenergistics2"),
-					()->AEExtremeCrafterTile::new, ()->ExtremeCrafterTile::new), ExtremeCrafterBlock.INSTANCE).
-			build(null).setRegistryName("packagedavaritia:extreme_crafter");
+					()->AENetherCrafterTile::new, ()->NetherCrafterTile::new), NetherCrafterBlock.INSTANCE).
+			build(null).setRegistryName("packagedavaritia:nether_crafter");
 
 	public static int energyCapacity = 5000;
-	public static int energyReq = 5000;
-	public static int energyUsage = 500;
+	public static int energyReq = 1000;
+	public static int energyUsage = 125;
 	public static boolean drawMEEnergy = true;
 
 	public boolean isWorking = false;
 	public int remainingProgress = 0;
 	public IExtremePackageRecipeInfo currentRecipe;
 
-	public ExtremeCrafterTile() {
+	public NetherCrafterTile() {
 		super(TYPE_INSTANCE);
-		setItemHandler(new ExtremeCrafterItemHandler(this));
+		setItemHandler(new NetherCrafterItemHandler(this));
 		setEnergyStorage(new EnergyStorage(this, energyCapacity));
 	}
 
 	@Override
 	protected ITextComponent getDefaultName() {
-		return new TranslationTextComponent("block.packagedavaritia.extreme_crafter");
+		return new TranslationTextComponent("block.packagedavaritia.nether_crafter");
 	}
 
 	@Override
@@ -79,14 +79,14 @@ public class ExtremeCrafterTile extends BaseTile implements ITickableTileEntity,
 	public boolean acceptPackage(IPackageRecipeInfo recipeInfo, List<ItemStack> stacks, Direction direction) {
 		if(!isBusy() && recipeInfo.isValid() && recipeInfo instanceof IExtremePackageRecipeInfo) {
 			IExtremePackageRecipeInfo recipe = (IExtremePackageRecipeInfo)recipeInfo;
-			if(recipe.getTier() == 4) {
-				ItemStack slotStack = itemHandler.getStackInSlot(81);
+			if(recipe.getTier() == 2) {
+				ItemStack slotStack = itemHandler.getStackInSlot(25);
 				ItemStack outputStack = recipe.getOutput();
 				if(slotStack.isEmpty() || slotStack.getItem() == outputStack.getItem() && ItemStack.tagMatches(slotStack, outputStack) && slotStack.getCount()+outputStack.getCount() <= outputStack.getMaxStackSize()) {
 					currentRecipe = recipe;
 					isWorking = true;
 					remainingProgress = energyReq;
-					for(int i = 0; i < 81; ++i) {
+					for(int i = 0; i < 25; ++i) {
 						itemHandler.setStackInSlot(i, recipe.getMatrix().getItem(i).copy());
 					}
 					setChanged();
@@ -99,7 +99,7 @@ public class ExtremeCrafterTile extends BaseTile implements ITickableTileEntity,
 
 	@Override
 	public boolean isBusy() {
-		return isWorking || !itemHandler.getStacks().subList(0, 81).stream().allMatch(ItemStack::isEmpty);
+		return isWorking || !itemHandler.getStacks().subList(0, 25).stream().allMatch(ItemStack::isEmpty);
 	}
 
 	protected void tickProcess() {
@@ -112,14 +112,14 @@ public class ExtremeCrafterTile extends BaseTile implements ITickableTileEntity,
 			endProcess();
 			return;
 		}
-		if(itemHandler.getStackInSlot(81).isEmpty()) {
-			itemHandler.setStackInSlot(81, currentRecipe.getOutput());
+		if(itemHandler.getStackInSlot(25).isEmpty()) {
+			itemHandler.setStackInSlot(25, currentRecipe.getOutput());
 		}
 		else {
-			itemHandler.getStackInSlot(81).grow(currentRecipe.getOutput().getCount());
+			itemHandler.getStackInSlot(25).grow(currentRecipe.getOutput().getCount());
 		}
 		List<ItemStack> remainingItems = currentRecipe.getRemainingItems();
-		for(int i = 0; i < 81; ++i) {
+		for(int i = 0; i < 25; ++i) {
 			itemHandler.setStackInSlot(i, remainingItems.get(i));
 		}
 		endProcess();
@@ -133,12 +133,12 @@ public class ExtremeCrafterTile extends BaseTile implements ITickableTileEntity,
 	}
 
 	protected void ejectItems() {
-		int endIndex = isWorking ? 81 : 0;
+		int endIndex = isWorking ? 25 : 0;
 		for(Direction direction : Direction.values()) {
 			TileEntity tile = level.getBlockEntity(worldPosition.relative(direction));
 			if(tile != null && !(tile instanceof UnpackagerTile) && tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, direction.getOpposite()).isPresent()) {
 				IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, direction.getOpposite()).resolve().get();
-				for(int i = 81; i >= endIndex; --i) {
+				for(int i = 25; i >= endIndex; --i) {
 					ItemStack stack = this.itemHandler.getStackInSlot(i);
 					if(stack.isEmpty()) {
 						continue;
@@ -151,12 +151,12 @@ public class ExtremeCrafterTile extends BaseTile implements ITickableTileEntity,
 	}
 
 	protected void chargeEnergy() {
-		ItemStack energyStack = itemHandler.getStackInSlot(82);
+		ItemStack energyStack = itemHandler.getStackInSlot(26);
 		if(energyStack.getCapability(CapabilityEnergy.ENERGY, null).isPresent()) {
 			int energyRequest = Math.min(energyStorage.getMaxReceive(), energyStorage.getMaxEnergyStored() - energyStorage.getEnergyStored());
 			energyStorage.receiveEnergy(energyStack.getCapability(CapabilityEnergy.ENERGY).resolve().get().extractEnergy(energyRequest, false), false);
 			if(energyStack.getCount() <= 0) {
-				itemHandler.setStackInSlot(82, ItemStack.EMPTY);
+				itemHandler.setStackInSlot(26, ItemStack.EMPTY);
 			}
 		}
 	}
@@ -166,7 +166,7 @@ public class ExtremeCrafterTile extends BaseTile implements ITickableTileEntity,
 		if(isWorking) {
 			return 1;
 		}
-		if(!itemHandler.getStacks().subList(0, 82).stream().allMatch(ItemStack::isEmpty)) {
+		if(!itemHandler.getStacks().subList(0, 26).stream().allMatch(ItemStack::isEmpty)) {
 			return 15;
 		}
 		return 0;
@@ -181,7 +181,7 @@ public class ExtremeCrafterTile extends BaseTile implements ITickableTileEntity,
 		if(nbt.contains("Recipe")) {
 			CompoundNBT tag = nbt.getCompound("Recipe");
 			IPackageRecipeInfo recipe = MiscHelper.INSTANCE.readRecipe(tag);
-			if(recipe instanceof IExtremePackageRecipeInfo && ((IExtremePackageRecipeInfo)recipe).getTier() == 4) {
+			if(recipe instanceof IExtremePackageRecipeInfo && ((IExtremePackageRecipeInfo)recipe).getTier() == 2) {
 				currentRecipe = (IExtremePackageRecipeInfo)recipe;
 			}
 		}
@@ -216,6 +216,6 @@ public class ExtremeCrafterTile extends BaseTile implements ITickableTileEntity,
 	@Override
 	public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
 		syncTile(false);
-		return new ExtremeCrafterContainer(windowId, playerInventory, this);
+		return new NetherCrafterContainer(windowId, playerInventory, this);
 	}
 }

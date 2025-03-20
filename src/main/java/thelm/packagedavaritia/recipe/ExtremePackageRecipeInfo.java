@@ -81,6 +81,11 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 	}
 
 	@Override
+	public int getTier() {
+		return 4;
+	}
+
+	@Override
 	public boolean isValid() {
 		return recipe != null;
 	}

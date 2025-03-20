@@ -1,8 +1,14 @@
 {
 	"itemGroup.packagedavaritia": "PackagedAvaritia",
-	
+
+	"block.packagedavaritia.nether_crafter": "ネザー梱包クラフター",
+	"block.packagedavaritia.ender_crafter": "エンダー梱包クラフター",
 	"block.packagedavaritia.extreme_crafter": "エクストリーム梱包クラフター",
 
+	"recipe.packagedavaritia.nether": "ネザークラフト",
+	"recipe.packagedavaritia.nether.short": "ネザー",
+	"recipe.packagedavaritia.ender": "エンダークラフト",
+	"recipe.packagedavaritia.ender.short": "エンダー",
 	"recipe.packagedavaritia.extreme": "エクストリームクラフト",
 	"recipe.packagedavaritia.extreme.short": "エクストリーム"
 }

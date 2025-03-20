@@ -1,0 +1,8 @@
+{
+	"parent": "block/cube_bottom_top",
+	"textures": {
+		"side": "packagedavaritia:blocks/ender_crafter_side",
+		"top": "packagedavaritia:blocks/ender_crafter_top",
+		"bottom": "packagedavaritia:blocks/ender_crafter_bottom"
+	}
+}

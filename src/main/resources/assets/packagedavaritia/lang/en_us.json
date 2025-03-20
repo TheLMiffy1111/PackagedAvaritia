@@ -1,8 +1,14 @@
 {
 	"itemGroup.packagedavaritia": "PackagedAvaritia",
-	
+
+	"block.packagedavaritia.nether_crafter": "Nether Package Crafter",
+	"block.packagedavaritia.ender_crafter": "Ender Package Crafter",
 	"block.packagedavaritia.extreme_crafter": "Extreme Package Crafter",
 
+	"recipe.packagedavaritia.nether": "Nether Crafting",
+	"recipe.packagedavaritia.nether.short": "Nether",
+	"recipe.packagedavaritia.ender": "Ender Crafting",
+	"recipe.packagedavaritia.ender.short": "Ender",
 	"recipe.packagedavaritia.extreme": "Extreme Crafting",
 	"recipe.packagedavaritia.extreme.short": "Extreme"
 }

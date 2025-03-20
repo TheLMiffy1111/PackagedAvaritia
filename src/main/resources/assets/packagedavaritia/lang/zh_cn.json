@@ -1,8 +1,14 @@
 {
 	"itemGroup.packagedavaritia": "封包无尽贪婪",
-	
+
+	"block.packagedavaritia.nether_crafter": "下界封包合成器",
+	"block.packagedavaritia.ender_crafter": "末地封包合成器",
 	"block.packagedavaritia.extreme_crafter": "终极封包合成器",
 
+	"recipe.packagedavaritia.nether": "下界合成",
+	"recipe.packagedavaritia.nether.short": "下界",
+	"recipe.packagedavaritia.ender": "末地合成",
+	"recipe.packagedavaritia.ender.short": "末地",
 	"recipe.packagedavaritia.extreme": "终极合成",
 	"recipe.packagedavaritia.extreme.short": "终极"
 }

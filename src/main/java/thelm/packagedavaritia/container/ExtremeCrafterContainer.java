@@ -1,4 +1,4 @@
-package thelm.packagedavaritia.menu;
+package thelm.packagedavaritia.container;
 
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
