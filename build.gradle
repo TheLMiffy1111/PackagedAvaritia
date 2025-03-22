@@ -66,10 +66,6 @@ repositories {
 	}
 }
 
-sourceSets {
-	main
-}
-
 def mcVersion = "1.19.2"
 def modName = "PackagedAvaritia-Universal"
 def modId = "packagedavaritia"
@@ -81,8 +77,15 @@ version = "2.1.0.0"
 
 archivesBaseName = "${modName}-${mcVersion}"
 
+sourceSets {
+	main
+}
+
 java {
-	toolchain.languageVersion = JavaLanguageVersion.of(17)
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+		vendor = JvmVendorSpec.AZUL
+	}
 	withSourcesJar()
 }
 
