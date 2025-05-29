@@ -1,17 +1,13 @@
 package thelm.packagedavaritia.client.event;
 
-import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import thelm.packagedavaritia.client.screen.EndCrafterScreen;
 import thelm.packagedavaritia.client.screen.ExtremeCrafterScreen;
 import thelm.packagedavaritia.client.screen.NetherCrafterScreen;
 import thelm.packagedavaritia.client.screen.SculkCrafterScreen;
-import thelm.packagedavaritia.menu.EndCrafterMenu;
-import thelm.packagedavaritia.menu.ExtremeCrafterMenu;
-import thelm.packagedavaritia.menu.NetherCrafterMenu;
-import thelm.packagedavaritia.menu.SculkCrafterMenu;
+import thelm.packagedavaritia.menu.PackagedAvaritiaMenus;
 
 public class ClientEventHandler {
 
@@ -21,15 +17,15 @@ public class ClientEventHandler {
 		return INSTANCE;
 	}
 
-	public void onConstruct() {
-		FMLJavaModLoadingContext.get().getModEventBus().register(this);
+	public void onConstruct(IEventBus modEventBus) {
+		modEventBus.register(this);
 	}
 
 	@SubscribeEvent
-	public void onClientSetup(FMLClientSetupEvent event) {
-		MenuScreens.register(SculkCrafterMenu.TYPE_INSTANCE, SculkCrafterScreen::new);
-		MenuScreens.register(NetherCrafterMenu.TYPE_INSTANCE, NetherCrafterScreen::new);
-		MenuScreens.register(EndCrafterMenu.TYPE_INSTANCE, EndCrafterScreen::new);
-		MenuScreens.register(ExtremeCrafterMenu.TYPE_INSTANCE, ExtremeCrafterScreen::new);
+	public void onRegisterMenuScreens(RegisterMenuScreensEvent event) {
+		event.register(PackagedAvaritiaMenus.SCULK_CRAFTER.get(), SculkCrafterScreen::new);
+		event.register(PackagedAvaritiaMenus.NETHER_CRAFTER.get(), NetherCrafterScreen::new);
+		event.register(PackagedAvaritiaMenus.END_CRAFTER.get(), EndCrafterScreen::new);
+		event.register(PackagedAvaritiaMenus.EXTREME_CRAFTER.get(), ExtremeCrafterScreen::new);
 	}
 }

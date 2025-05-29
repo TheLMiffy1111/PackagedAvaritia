@@ -1,8 +1,8 @@
 package thelm.packagedavaritia.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import thelm.packagedavaritia.block.entity.EndCrafterBlockEntity;
 import thelm.packagedavaritia.block.entity.ExtremeCrafterBlockEntity;
 import thelm.packagedavaritia.block.entity.NetherCrafterBlockEntity;
@@ -12,35 +12,35 @@ public class PackagedAvaritiaConfig {
 
 	private PackagedAvaritiaConfig() {}
 
-	private static ForgeConfigSpec serverSpec;
+	private static ModConfigSpec serverSpec;
 
-	public static ForgeConfigSpec.IntValue sculkCrafterEnergyCapacity;
-	public static ForgeConfigSpec.IntValue sculkCrafterEnergyReq;
-	public static ForgeConfigSpec.IntValue sculkCrafterEnergyUsage;
-	public static ForgeConfigSpec.BooleanValue sculkCrafterDrawMEEnergy;
+	public static ModConfigSpec.IntValue sculkCrafterEnergyCapacity;
+	public static ModConfigSpec.IntValue sculkCrafterEnergyReq;
+	public static ModConfigSpec.IntValue sculkCrafterEnergyUsage;
+	public static ModConfigSpec.BooleanValue sculkCrafterDrawMEEnergy;
 
-	public static ForgeConfigSpec.IntValue netherCrafterEnergyCapacity;
-	public static ForgeConfigSpec.IntValue netherCrafterEnergyReq;
-	public static ForgeConfigSpec.IntValue netherCrafterEnergyUsage;
-	public static ForgeConfigSpec.BooleanValue netherCrafterDrawMEEnergy;
+	public static ModConfigSpec.IntValue netherCrafterEnergyCapacity;
+	public static ModConfigSpec.IntValue netherCrafterEnergyReq;
+	public static ModConfigSpec.IntValue netherCrafterEnergyUsage;
+	public static ModConfigSpec.BooleanValue netherCrafterDrawMEEnergy;
 
-	public static ForgeConfigSpec.IntValue endCrafterEnergyCapacity;
-	public static ForgeConfigSpec.IntValue endCrafterEnergyReq;
-	public static ForgeConfigSpec.IntValue endCrafterEnergyUsage;
-	public static ForgeConfigSpec.BooleanValue endCrafterDrawMEEnergy;
+	public static ModConfigSpec.IntValue endCrafterEnergyCapacity;
+	public static ModConfigSpec.IntValue endCrafterEnergyReq;
+	public static ModConfigSpec.IntValue endCrafterEnergyUsage;
+	public static ModConfigSpec.BooleanValue endCrafterDrawMEEnergy;
 
-	public static ForgeConfigSpec.IntValue extremeCrafterEnergyCapacity;
-	public static ForgeConfigSpec.IntValue extremeCrafterEnergyReq;
-	public static ForgeConfigSpec.IntValue extremeCrafterEnergyUsage;
-	public static ForgeConfigSpec.BooleanValue extremeCrafterDrawMEEnergy;
+	public static ModConfigSpec.IntValue extremeCrafterEnergyCapacity;
+	public static ModConfigSpec.IntValue extremeCrafterEnergyReq;
+	public static ModConfigSpec.IntValue extremeCrafterEnergyUsage;
+	public static ModConfigSpec.BooleanValue extremeCrafterDrawMEEnergy;
 
-	public static void registerConfig() {
+	public static void registerConfig(ModContainer modContainer) {
 		buildConfig();
-		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, serverSpec);
+		modContainer.registerConfig(ModConfig.Type.SERVER, serverSpec);
 	}
 
 	private static void buildConfig() {
-		ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+		ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
 
 		builder.push("sculk_crafter");
 		builder.comment("How much FE the Sculk Package Crafter should hold.");

@@ -4,17 +4,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+
+import committee.nova.mods.avaritia.api.common.crafting.TierInput;
 import committee.nova.mods.avaritia.common.crafting.recipe.BaseTableCraftingRecipe;
 import committee.nova.mods.avaritia.init.registry.ModRecipeTypes;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import thelm.packagedauto.api.IPackagePattern;
 import thelm.packagedauto.api.IPackageRecipeType;
@@ -23,44 +29,69 @@ import thelm.packagedauto.util.PackagePattern;
 
 public class SculkPackageRecipeInfo implements ITablePackageRecipeInfo {
 
-	BaseTableCraftingRecipe recipe;
-	List<ItemStack> input = new ArrayList<>();
-	Container matrix = new SimpleContainer(9);
-	ItemStack output;
-	List<IPackagePattern> patterns = new ArrayList<>();
+	public static final MapCodec<SculkPackageRecipeInfo> MAP_CODEC = RecordCodecBuilder.mapCodec(instance->instance.group(
+			ResourceLocation.CODEC.fieldOf("id").forGetter(SculkPackageRecipeInfo::getRecipeId),
+			Codec.INT.fieldOf("width").forGetter(SculkPackageRecipeInfo::getMatrixWidth),
+			Codec.INT.fieldOf("height").forGetter(SculkPackageRecipeInfo::getMatrixHeight),
+			ItemStack.OPTIONAL_CODEC.orElse(ItemStack.EMPTY).sizeLimitedListOf(9).fieldOf("input").forGetter(SculkPackageRecipeInfo::getMatrixAsList)).
+			apply(instance, SculkPackageRecipeInfo::new));
+	public static final Codec<SculkPackageRecipeInfo> CODEC = MAP_CODEC.codec();
+	public static final StreamCodec<RegistryFriendlyByteBuf, SculkPackageRecipeInfo> STREAM_CODEC = StreamCodec.composite(
+			ResourceLocation.STREAM_CODEC, SculkPackageRecipeInfo::getRecipeId,
+			ByteBufCodecs.INT, SculkPackageRecipeInfo::getMatrixWidth,
+			ByteBufCodecs.INT, SculkPackageRecipeInfo::getMatrixHeight,
+			ItemStack.OPTIONAL_LIST_STREAM_CODEC, SculkPackageRecipeInfo::getMatrixAsList,
+			SculkPackageRecipeInfo::new);
 
-	@Override
-	public void load(CompoundTag nbt) {
-		input.clear();
-		output = ItemStack.EMPTY;
-		patterns.clear();
-		Recipe<?> recipe = MiscHelper.INSTANCE.getRecipeManager().byKey(new ResourceLocation(nbt.getString("Recipe"))).orElse(null);
-		List<ItemStack> matrixList = new ArrayList<>();
-		MiscHelper.INSTANCE.loadAllItems(nbt.getList("Matrix", 10), matrixList);
-		for(int i = 0; i < 9 && i < matrixList.size(); ++i) {
-			matrix.setItem(i, matrixList.get(i));
-		}
-		if(recipe instanceof BaseTableCraftingRecipe tableRecipe) {
-			this.recipe = tableRecipe;
-			output = this.recipe.assemble(matrix, MiscHelper.INSTANCE.getRegistryAccess()).copy();
-		}
-		input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));
+	private final ResourceLocation id;
+	private final BaseTableCraftingRecipe recipe;
+	private final List<ItemStack> input;
+	private final TierInput matrix;
+	private final ItemStack output;
+	private final List<IPackagePattern> patterns = new ArrayList<>();
+
+	public SculkPackageRecipeInfo(ResourceLocation id, int width, int height, List<ItemStack> matrixSer) {
+		this.id = id;
+		matrix = TierInput.of(width, height, matrixSer, 1);
+		input = MiscHelper.INSTANCE.condenseStacks(matrix.items());
 		for(int i = 0; i*9 < input.size(); ++i) {
 			patterns.add(new PackagePattern(this, i));
 		}
+		Recipe<?> recipeSer = MiscHelper.INSTANCE.getRecipeManager().byKey(id).map(RecipeHolder::value).orElse(null);
+		if(recipeSer instanceof BaseTableCraftingRecipe tableRecipe) {
+			recipe = tableRecipe;
+			output = recipe.assemble(matrix, MiscHelper.INSTANCE.getRegistryAccess()).copy();
+		}
+		else {
+			recipe = null;
+			output = ItemStack.EMPTY;
+		}
 	}
 
-	@Override
-	public void save(CompoundTag nbt) {
-		if(recipe != null) {
-			nbt.putString("Recipe", recipe.getId().toString());
-		}
-		List<ItemStack> matrixList = new ArrayList<>();
+	public SculkPackageRecipeInfo(List<ItemStack> inputs, Level level) {
+		NonNullList<ItemStack> matrixList = NonNullList.withSize(9, ItemStack.EMPTY);
+		int[] slotArray = SculkPackageRecipeType.SLOTS.toIntArray();
 		for(int i = 0; i < 9; ++i) {
-			matrixList.add(matrix.getItem(i));
+			ItemStack toSet = inputs.get(slotArray[i]);
+			toSet.setCount(1);
+			matrixList.set(i, toSet.copy());
 		}
-		ListTag matrixTag = MiscHelper.INSTANCE.saveAllItems(new ListTag(), matrixList);
-		nbt.put("Matrix", matrixTag);
+		matrix = TierInput.of(3, 3, matrixList, 1);
+		RecipeHolder<BaseTableCraftingRecipe> recipeHolder = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(ModRecipeTypes.CRAFTING_TABLE_RECIPE.get(), matrix, level).orElse(null);
+		if(recipeHolder != null) {
+			id = recipeHolder.id();
+			recipe = recipeHolder.value();
+			output = recipe.assemble(matrix, level.registryAccess()).copy();
+		}
+		else {
+			id = null;
+			recipe = null;
+			output = null;
+		}
+		input = MiscHelper.INSTANCE.condenseStacks(matrix.items());
+		for(int i = 0; i*9 < input.size(); ++i) {
+			this.patterns.add(new PackagePattern(this, i));
+		}
 	}
 
 	@Override
@@ -75,7 +106,7 @@ public class SculkPackageRecipeInfo implements ITablePackageRecipeInfo {
 
 	@Override
 	public boolean isValid() {
-		return recipe != null;
+		return id != null && recipe != null;
 	}
 
 	@Override
@@ -98,9 +129,25 @@ public class SculkPackageRecipeInfo implements ITablePackageRecipeInfo {
 		return recipe;
 	}
 
+	public ResourceLocation getRecipeId() {
+		return id;
+	}
+
 	@Override
-	public Container getMatrix() {
+	public TierInput getMatrix() {
 		return matrix;
+	}
+
+	public List<ItemStack> getMatrixAsList() {
+		return Collections.unmodifiableList(matrix.items());
+	}
+
+	public int getMatrixWidth() {
+		return matrix.width();
+	}
+
+	public int getMatrixHeight() {
+		return matrix.height();
 	}
 
 	@Override
@@ -109,37 +156,13 @@ public class SculkPackageRecipeInfo implements ITablePackageRecipeInfo {
 	}
 
 	@Override
-	public void generateFromStacks(List<ItemStack> input, List<ItemStack> output, Level level) {
-		recipe = null;
-		this.input.clear();
-		patterns.clear();
-		if(level != null) {
-			int[] slotArray = SculkPackageRecipeType.SLOTS.toIntArray();
-			for(int i = 0; i < 9; ++i) {
-				ItemStack toSet = input.get(slotArray[i]);
-				toSet.setCount(1);
-				matrix.setItem(i, toSet.copy());
-			}
-			BaseTableCraftingRecipe recipe = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(ModRecipeTypes.CRAFTING_TABLE_RECIPE.get(), matrix, level).orElse(null);
-			if(recipe != null) {
-				this.recipe = recipe;
-				this.input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));
-				this.output = recipe.assemble(matrix, MiscHelper.INSTANCE.getRegistryAccess()).copy();
-				for(int i = 0; i*9 < this.input.size(); ++i) {
-					patterns.add(new PackagePattern(this, i));
-				}
-				return;
-			}
-		}
-		matrix.clearContent();
-	}
-
-	@Override
 	public Int2ObjectMap<ItemStack> getEncoderStacks() {
 		Int2ObjectMap<ItemStack> map = new Int2ObjectOpenHashMap<>();
 		int[] slotArray = SculkPackageRecipeType.SLOTS.toIntArray();
-		for(int i = 0; i < 9; ++i) {
-			map.put(slotArray[i], matrix.getItem(i));
+		for(int i = 0; i < matrix.height(); ++i) {
+			for(int j = 0; j < matrix.width(); ++j) {
+				map.put(slotArray[i*3+j], matrix.getItem(i*matrix.width()+j));
+			}
 		}
 		return map;
 	}

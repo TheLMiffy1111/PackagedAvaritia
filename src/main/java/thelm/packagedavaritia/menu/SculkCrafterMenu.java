@@ -1,21 +1,16 @@
 package thelm.packagedavaritia.menu;
 
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import thelm.packagedauto.menu.BaseMenu;
-import thelm.packagedauto.menu.factory.PositionalBlockEntityMenuFactory;
 import thelm.packagedauto.slot.RemoveOnlySlot;
 import thelm.packagedavaritia.block.entity.SculkCrafterBlockEntity;
 import thelm.packagedavaritia.slot.SculkCrafterRemoveOnlySlot;
 
 public class SculkCrafterMenu extends BaseMenu<SculkCrafterBlockEntity> {
 
-	public static final MenuType<SculkCrafterMenu> TYPE_INSTANCE = IForgeMenuType.create(new PositionalBlockEntityMenuFactory<>(SculkCrafterMenu::new));
-
 	public SculkCrafterMenu(int windowId, Inventory inventory, SculkCrafterBlockEntity blockEntity) {
-		super(TYPE_INSTANCE, windowId, inventory, blockEntity);
+		super(PackagedAvaritiaMenus.SCULK_CRAFTER.get(), windowId, inventory, blockEntity);
 		addSlot(new SlotItemHandler(itemHandler, 10, 8, 53));
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 3; ++j) {

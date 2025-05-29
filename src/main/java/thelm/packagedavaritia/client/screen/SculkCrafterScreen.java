@@ -9,7 +9,7 @@ import thelm.packagedavaritia.menu.SculkCrafterMenu;
 
 public class SculkCrafterScreen extends BaseScreen<SculkCrafterMenu> {
 
-	public static final ResourceLocation BACKGROUND = new ResourceLocation("packagedavaritia:textures/gui/sculk_crafter.png");
+	public static final ResourceLocation BACKGROUND = ResourceLocation.parse("packagedavaritia:textures/gui/sculk_crafter.png");
 
 	public SculkCrafterScreen(SculkCrafterMenu menu, Inventory inventory, Component title) {
 		super(menu, inventory, title);

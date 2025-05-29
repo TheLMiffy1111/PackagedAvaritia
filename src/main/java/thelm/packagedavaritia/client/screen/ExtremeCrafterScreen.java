@@ -9,7 +9,7 @@ import thelm.packagedavaritia.menu.ExtremeCrafterMenu;
 
 public class ExtremeCrafterScreen extends BaseScreen<ExtremeCrafterMenu> {
 
-	public static final ResourceLocation BACKGROUND = new ResourceLocation("packagedavaritia:textures/gui/extreme_crafter.png");
+	public static final ResourceLocation BACKGROUND = ResourceLocation.parse("packagedavaritia:textures/gui/extreme_crafter.png");
 
 	public ExtremeCrafterScreen(ExtremeCrafterMenu menu, Inventory inventory, Component title) {
 		super(menu, inventory, title);

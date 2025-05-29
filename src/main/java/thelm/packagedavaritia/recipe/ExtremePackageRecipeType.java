@@ -3,6 +3,9 @@ package thelm.packagedavaritia.recipe;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+
 import committee.nova.mods.avaritia.common.crafting.recipe.ShapedTableCraftingRecipe;
 import committee.nova.mods.avaritia.init.registry.ModBlocks;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -12,10 +15,13 @@ import it.unimi.dsi.fastutil.ints.IntList;
 import it.unimi.dsi.fastutil.ints.IntRBTreeSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.core.Vec3i;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import thelm.packagedauto.api.IPackageRecipeInfo;
 import thelm.packagedauto.api.IPackageRecipeType;
 import thelm.packagedauto.api.IRecipeSlotViewWrapper;
@@ -24,9 +30,9 @@ import thelm.packagedauto.api.IRecipeSlotsViewWrapper;
 public class ExtremePackageRecipeType implements IPackageRecipeType {
 
 	public static final ExtremePackageRecipeType INSTANCE = new ExtremePackageRecipeType();
-	public static final ResourceLocation NAME = new ResourceLocation("packagedavaritia:extreme");
+	public static final ResourceLocation NAME = ResourceLocation.parse("packagedavaritia:extreme");
 	public static final IntSet SLOTS;
-	public static final List<ResourceLocation> CATEGORIES = List.of(new ResourceLocation("avaritia:extreme_craft"));
+	public static final List<ResourceLocation> CATEGORIES = List.of(ResourceLocation.parse("avaritia:extreme_craft"));
 	public static final Vec3i COLOR = new Vec3i(139, 139, 139);
 	public static final Vec3i COLOR_DISABLED = new Vec3i(64, 64, 64);
 
@@ -53,8 +59,23 @@ public class ExtremePackageRecipeType implements IPackageRecipeType {
 	}
 
 	@Override
-	public IPackageRecipeInfo getNewRecipeInfo() {
-		return new ExtremePackageRecipeInfo();
+	public MapCodec<? extends IPackageRecipeInfo> getRecipeInfoMapCodec() {
+		return ExtremePackageRecipeInfo.MAP_CODEC;
+	}
+
+	@Override
+	public Codec<? extends IPackageRecipeInfo> getRecipeInfoCodec() {
+		return ExtremePackageRecipeInfo.CODEC;
+	}
+
+	@Override
+	public StreamCodec<RegistryFriendlyByteBuf, ? extends IPackageRecipeInfo> getRecipeInfoStreamCodec() {
+		return ExtremePackageRecipeInfo.STREAM_CODEC;
+	}
+
+	@Override
+	public IPackageRecipeInfo generateRecipeInfoFromStacks(List<ItemStack> inputs, List<ItemStack> outputs, Level level) {
+		return new ExtremePackageRecipeInfo(inputs, level);
 	}
 
 	@Override

@@ -1,38 +1,38 @@
 {
-	"conditions": [
+	"neoforge:conditions": [
 		{
-			"type": "forge:not",
+			"type": "neoforge:not",
 			"value": {
-				"type": "forge:mod_loaded",
+				"type": "neoforge:mod_loaded",
 				"modid": "ae2"
 			}
 		}
 	],
 	"type": "minecraft:crafting_shaped",
 	"result": {
-		"item": "packagedavaritia:sculk_crafter",
+		"id": "packagedavaritia:extreme_crafter",
 		"count": 1
 	},
 	"pattern": [
-		"SCS",
+		"MCM",
 		"RTR",
-		"SHS"
+		"MHM"
 	],
 	"key": {
 		"C": {
 			"item": "packagedauto:package_component"
 		},
 		"T": {
-			"item": "avaritia:sculk_crafting_table"
+			"item": "avaritia:extreme_crafting_table"
 		},
 		"H": {
 			"item": "minecraft:hopper"
 		},
-		"E": {
-			"item": "minecraft:sculk"
+		"M": {
+			"item": "avaritia:crystal_matrix_ingot"
 		},
 		"R": {
-			"tag": "forge:dusts/redstone"
+			"tag": "c:dusts/redstone"
 		}
 	}
 }

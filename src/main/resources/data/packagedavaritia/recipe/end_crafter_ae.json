@@ -1,35 +1,35 @@
 {
-	"conditions": [
+	"neoforge:conditions": [
 		{
-			"type": "forge:mod_loaded",
+			"type": "neoforge:mod_loaded",
 			"modid": "ae2"
 		}
 	],
 	"type": "minecraft:crafting_shaped",
 	"result": {
-		"item": "packagedavaritia:extreme_crafter",
+		"id": "packagedavaritia:end_crafter",
 		"count": 1
 	},
 	"pattern": [
-		"MCM",
+		"SCS",
 		"RTR",
-		"MHM"
+		"SHS"
 	],
 	"key": {
 		"C": {
 			"item": "packagedauto:me_package_component"
 		},
 		"T": {
-			"item": "avaritia:extreme_crafting_table"
+			"item": "avaritia:end_crafting_table"
 		},
 		"H": {
 			"item": "minecraft:hopper"
 		},
-		"M": {
-			"item": "avaritia:crystal_matrix_ingot"
+		"S": {
+			"item": "minecraft:shulker_shell"
 		},
 		"R": {
-			"tag": "forge:dusts/redstone"
+			"tag": "c:dusts/redstone"
 		}
 	}
 }

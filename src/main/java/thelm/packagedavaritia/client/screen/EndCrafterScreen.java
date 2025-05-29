@@ -9,7 +9,7 @@ import thelm.packagedavaritia.menu.EndCrafterMenu;
 
 public class EndCrafterScreen extends BaseScreen<EndCrafterMenu> {
 
-	public static final ResourceLocation BACKGROUND = new ResourceLocation("packagedavaritia:textures/gui/end_crafter.png");
+	public static final ResourceLocation BACKGROUND = ResourceLocation.parse("packagedavaritia:textures/gui/end_crafter.png");
 
 	public EndCrafterScreen(EndCrafterMenu menu, Inventory inventory, Component title) {
 		super(menu, inventory, title);

@@ -9,7 +9,7 @@ import thelm.packagedavaritia.menu.NetherCrafterMenu;
 
 public class NetherCrafterScreen extends BaseScreen<NetherCrafterMenu> {
 
-	public static final ResourceLocation BACKGROUND = new ResourceLocation("packagedavaritia:textures/gui/nether_crafter.png");
+	public static final ResourceLocation BACKGROUND = ResourceLocation.parse("packagedavaritia:textures/gui/nether_crafter.png");
 
 	public NetherCrafterScreen(NetherCrafterMenu menu, Inventory inventory, Component title) {
 		super(menu, inventory, title);

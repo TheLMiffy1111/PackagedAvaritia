@@ -1,8 +1,6 @@
 package thelm.packagedavaritia.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -14,11 +12,9 @@ import net.minecraft.world.level.material.MapColor;
 import thelm.packagedauto.block.BaseBlock;
 import thelm.packagedauto.block.entity.BaseBlockEntity;
 import thelm.packagedavaritia.block.entity.EndCrafterBlockEntity;
+import thelm.packagedavaritia.block.entity.PackagedAvaritiaBlockEntities;
 
 public class EndCrafterBlock extends BaseBlock {
-
-	public static final EndCrafterBlock INSTANCE = new EndCrafterBlock();
-	public static final Item ITEM_INSTANCE = new BlockItem(INSTANCE, new Item.Properties());
 
 	public EndCrafterBlock() {
 		super(BlockBehaviour.Properties.of().strength(15F, 25F).mapColor(MapColor.METAL).sound(SoundType.METAL));
@@ -26,7 +22,7 @@ public class EndCrafterBlock extends BaseBlock {
 
 	@Override
 	public EndCrafterBlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return EndCrafterBlockEntity.TYPE_INSTANCE.create(pos, state);
+		return PackagedAvaritiaBlockEntities.END_CRAFTER.get().create(pos, state);
 	}
 
 	@Override

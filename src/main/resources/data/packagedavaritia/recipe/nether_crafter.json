@@ -1,16 +1,16 @@
 {
-	"conditions": [
+	"neoforge:conditions": [
 		{
-			"type": "forge:not",
+			"type": "neoforge:not",
 			"value": {
-				"type": "forge:mod_loaded",
+				"type": "neoforge:mod_loaded",
 				"modid": "ae2"
 			}
 		}
 	],
 	"type": "minecraft:crafting_shaped",
 	"result": {
-		"item": "packagedavaritia:nether_crafter",
+		"id": "packagedavaritia:nether_crafter",
 		"count": 1
 	},
 	"pattern": [
@@ -29,10 +29,10 @@
 			"item": "minecraft:hopper"
 		},
 		"O": {
-			"item": "minecraft:crying_obsidian"
+			"tag": "c:obsidians/crying"
 		},
 		"R": {
-			"tag": "forge:dusts/redstone"
+			"tag": "c:dusts/redstone"
 		}
 	}
 }
