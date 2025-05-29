@@ -111,8 +111,11 @@ public class ExtremeCrafterBlockEntity extends BaseBlockEntity implements IPacka
 			itemHandler.getStackInSlot(81).grow(currentRecipe.getOutput().getCount());
 		}
 		List<ItemStack> remainingItems = currentRecipe.getRemainingItems();
-		for(int i = 0; i < 81; ++i) {
-			itemHandler.setStackInSlot(i, remainingItems.get(i));
+		CraftingInput matrix = currentRecipe.getMatrix();
+		for(int i = 0; i < matrix.height(); ++i) {
+			for(int j = 0; j < matrix.width(); ++j) {
+				itemHandler.setStackInSlot(i*9+j, remainingItems.get(i*matrix.width()+j));
+			}
 		}
 		endProcess();
 	}

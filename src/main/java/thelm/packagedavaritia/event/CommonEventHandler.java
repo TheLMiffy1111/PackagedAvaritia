@@ -1,6 +1,5 @@
 package thelm.packagedavaritia.event;
 
-import appeng.api.AECapabilities;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -10,13 +9,13 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import thelm.packagedauto.block.entity.BaseBlockEntity;
-import thelm.packagedauto.integration.appeng.AppEngUtil;
 import thelm.packagedauto.util.ApiImpl;
 import thelm.packagedauto.util.MiscHelper;
 import thelm.packagedavaritia.block.PackagedAvaritiaBlocks;
 import thelm.packagedavaritia.block.entity.PackagedAvaritiaBlockEntities;
 import thelm.packagedavaritia.config.PackagedAvaritiaConfig;
 import thelm.packagedavaritia.creativetab.PackagedAvaritiaCreativeTabs;
+import thelm.packagedavaritia.integration.appeng.AppEngEventHandler;
 import thelm.packagedavaritia.item.PackagedAvaritiaItems;
 import thelm.packagedavaritia.menu.PackagedAvaritiaMenus;
 import thelm.packagedavaritia.recipe.ExtremePackageRecipeType;
@@ -31,6 +30,9 @@ public class CommonEventHandler {
 
 	public void onConstruct(IEventBus modEventBus, ModContainer modContainer) {
 		modEventBus.register(this);
+		MiscHelper.INSTANCE.conditionalRunnable(()->ModList.get().isLoaded("ae2"), ()->()->{
+			modEventBus.register(AppEngEventHandler.getInstance());
+		}, ()->()->{}).run();
 		PackagedAvaritiaConfig.registerConfig(modContainer);
 
 		PackagedAvaritiaBlocks.BLOCKS.register(modEventBus);
@@ -50,10 +52,6 @@ public class CommonEventHandler {
 		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, PackagedAvaritiaBlockEntities.EXTREME_CRAFTER.get(), BaseBlockEntity::getItemHandler);
 
 		event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, PackagedAvaritiaBlockEntities.EXTREME_CRAFTER.get(), BaseBlockEntity::getEnergyStorage);
-
-		MiscHelper.INSTANCE.conditionalRunnable(()->ModList.get().isLoaded("ae2"), ()->()->{
-			event.registerBlockEntity(AECapabilities.IN_WORLD_GRID_NODE_HOST, PackagedAvaritiaBlockEntities.EXTREME_CRAFTER.get(), (be, v)->AppEngUtil.getAsInWorldGridNodeHost(be));
-		}, ()->()->{}).run();
 	}
 
 	@SubscribeEvent
