@@ -17,7 +17,7 @@ public class ExtremeCrafterBlock extends BaseBlock {
 	public static final Item ITEM_INSTANCE = new BlockItem(INSTANCE, new Item.Properties().tab(PackagedAvaritia.ITEM_GROUP)).setRegistryName("packagedavaritia:extreme_crafter");
 
 	public ExtremeCrafterBlock() {
-		super(AbstractBlock.Properties.of(Material.METAL).strength(15F, 25F).sound(SoundType.METAL));
+		super(AbstractBlock.Properties.of(Material.METAL).strength(10F, 15F).sound(SoundType.METAL));
 		setRegistryName("packagedavaritia:extreme_crafter");
 	}
 

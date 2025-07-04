@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import avaritia.block.ModBlocks;
+import avaritia.init.ModTypes;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntRBTreeSet;
@@ -90,7 +90,7 @@ public class ExtremePackageRecipeType implements IPackageRecipeType {
 
 	@Override
 	public Object getRepresentation() {
-		return new ItemStack(ModBlocks.extreme_crafting_table.get());
+		return new ItemStack(ModTypes.extreme_table.get());
 	}
 
 	@Override
