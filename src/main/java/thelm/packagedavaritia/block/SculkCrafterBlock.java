@@ -17,7 +17,7 @@ import thelm.packagedavaritia.block.entity.SculkCrafterBlockEntity;
 public class SculkCrafterBlock extends BaseBlock {
 
 	public SculkCrafterBlock() {
-		super(BlockBehaviour.Properties.of().strength(15F, 25F).mapColor(MapColor.METAL).sound(SoundType.METAL));
+		super(BlockBehaviour.Properties.of().strength(10F, 15F).mapColor(MapColor.METAL).sound(SoundType.METAL));
 	}
 
 	@Override

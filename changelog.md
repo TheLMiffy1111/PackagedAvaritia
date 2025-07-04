@@ -1,1 +1,2 @@
-1.21.1 Re:Avaritia  
+Adjust block strength values  
+Update Re:Avaritia  

@@ -8,8 +8,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import committee.nova.mods.avaritia.api.common.crafting.ITierCraftingRecipe;
 import committee.nova.mods.avaritia.api.common.crafting.TierInput;
-import committee.nova.mods.avaritia.common.crafting.recipe.BaseTableCraftingRecipe;
 import committee.nova.mods.avaritia.init.registry.ModRecipeTypes;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -44,7 +44,7 @@ public class NetherPackageRecipeInfo implements ITablePackageRecipeInfo {
 			NetherPackageRecipeInfo::new);
 
 	private final ResourceLocation id;
-	private final BaseTableCraftingRecipe recipe;
+	private final ITierCraftingRecipe recipe;
 	private final List<ItemStack> input;
 	private final TierInput matrix;
 	private final ItemStack output;
@@ -58,7 +58,7 @@ public class NetherPackageRecipeInfo implements ITablePackageRecipeInfo {
 			patterns.add(new PackagePattern(this, i));
 		}
 		Recipe<?> recipeSer = MiscHelper.INSTANCE.getRecipeManager().byKey(id).map(RecipeHolder::value).orElse(null);
-		if(recipeSer instanceof BaseTableCraftingRecipe tableRecipe) {
+		if(recipeSer instanceof ITierCraftingRecipe tableRecipe) {
 			recipe = tableRecipe;
 			output = recipe.assemble(matrix, MiscHelper.INSTANCE.getRegistryAccess()).copy();
 		}
@@ -77,7 +77,7 @@ public class NetherPackageRecipeInfo implements ITablePackageRecipeInfo {
 			matrixList.set(i, toSet.copy());
 		}
 		matrix = TierInput.of(5, 5, matrixList, 2);
-		RecipeHolder<BaseTableCraftingRecipe> recipeHolder = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(ModRecipeTypes.CRAFTING_TABLE_RECIPE.get(), matrix, level).orElse(null);
+		RecipeHolder<ITierCraftingRecipe> recipeHolder = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(ModRecipeTypes.CRAFTING_TABLE_RECIPE.get(), matrix, level).orElse(null);
 		if(recipeHolder != null) {
 			id = recipeHolder.id();
 			recipe = recipeHolder.value();
@@ -125,7 +125,7 @@ public class NetherPackageRecipeInfo implements ITablePackageRecipeInfo {
 	}
 
 	@Override
-	public BaseTableCraftingRecipe getRecipe() {
+	public ITierCraftingRecipe getRecipe() {
 		return recipe;
 	}
 
