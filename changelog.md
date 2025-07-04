@@ -1,1 +1,1 @@
-1.18.2 Avaritia Endless  
+Adjust block strength values  
