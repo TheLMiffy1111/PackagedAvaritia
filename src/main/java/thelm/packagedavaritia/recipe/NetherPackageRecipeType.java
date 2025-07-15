@@ -26,6 +26,7 @@ public class NetherPackageRecipeType implements IPackageRecipeType {
 	public static final ResourceLocation NAME = new ResourceLocation("packagedavaritia:nether");
 	public static final IntSet SLOTS;
 	public static final List<ResourceLocation> CATEGORIES = List.of(new ResourceLocation("avaritia:nether_craft"));
+	public static final List<ResourceLocation> CATEGORIES_EMI = List.of(new ResourceLocation("avaritia:nether_crafting_table"));
 	public static final Vec3i COLOR = new Vec3i(139, 139, 139);
 	public static final Vec3i COLOR_DISABLED = new Vec3i(64, 64, 64);
 
@@ -68,6 +69,11 @@ public class NetherPackageRecipeType implements IPackageRecipeType {
 	@Override
 	public List<ResourceLocation> getJEICategories() {
 		return CATEGORIES;
+	}
+
+	@Override
+	public List<ResourceLocation> getEMICategories() {
+		return CATEGORIES_EMI;
 	}
 
 	@Override

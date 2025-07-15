@@ -1,1 +1,1 @@
-Adjust block strength values  
+Fix EMI recipe transfer  
