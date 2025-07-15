@@ -1,2 +1,1 @@
-Adjust block strength values  
-Update Re:Avaritia  
+Fix EMI recipe transfer  
