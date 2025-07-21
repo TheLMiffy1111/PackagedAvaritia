@@ -8,6 +8,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.config.ModConfig.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistry;
 import thelm.packagedauto.util.ApiImpl;
@@ -16,6 +17,7 @@ import thelm.packagedavaritia.config.PackagedAvaritiaConfig;
 import thelm.packagedavaritia.container.ExtremeCrafterContainer;
 import thelm.packagedavaritia.recipe.ExtremePackageRecipeType;
 import thelm.packagedavaritia.tile.ExtremeCrafterTile;
+import thelm.packagedavaritia.variant.VariantChecker;
 
 public class CommonEventHandler {
 
@@ -28,6 +30,11 @@ public class CommonEventHandler {
 	public void onConstruct() {
 		FMLJavaModLoadingContext.get().getModEventBus().register(this);
 		PackagedAvaritiaConfig.registerConfig();
+	}
+
+	@SubscribeEvent
+	public void onConstructMod(FMLConstructModEvent event) {
+		VariantChecker.check();
 	}
 
 	@SubscribeEvent
