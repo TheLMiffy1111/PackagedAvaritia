@@ -6,6 +6,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import thelm.packagedauto.block.entity.BaseBlockEntity;
@@ -22,6 +23,7 @@ import thelm.packagedavaritia.recipe.EndPackageRecipeType;
 import thelm.packagedavaritia.recipe.ExtremePackageRecipeType;
 import thelm.packagedavaritia.recipe.NetherPackageRecipeType;
 import thelm.packagedavaritia.recipe.SculkPackageRecipeType;
+import thelm.packagedavaritia.variant.VariantChecker;
 
 public class CommonEventHandler {
 
@@ -43,6 +45,11 @@ public class CommonEventHandler {
 		PackagedAvaritiaBlockEntities.BLOCK_ENTITIES.register(modEventBus);
 		PackagedAvaritiaMenus.MENUS.register(modEventBus);
 		PackagedAvaritiaCreativeTabs.CREATIVE_TABS.register(modEventBus);
+	}
+
+	@SubscribeEvent
+	public void onConstructMod(FMLConstructModEvent event) {
+		VariantChecker.check();
 	}
 
 	@SubscribeEvent
