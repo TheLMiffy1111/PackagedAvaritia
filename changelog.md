@@ -1,1 +1,2 @@
-Adjust block strength values  
+Add Avaritia variant check  
+Adjust textures  
