@@ -73,7 +73,7 @@ def specVersion = "2"
 def vendor = "thelm"
 
 group = "thelm.packagedavaritia"
-version = "2.1.0.1"
+version = "2.1.1.2"
 
 archivesBaseName = "${modName}-${mcVersion}"
 
@@ -117,7 +117,7 @@ dependencies {
 	forge "net.minecraftforge:forge:1.19.2-43.4.2"
 
 	// Dependencies
-	modImplementation "thelm.packagedauto:PackagedAuto-1.19.2:3.2.14.47"
+	modImplementation "thelm.packagedauto:PackagedAuto-1.19.2:3.2.15.48"
 	modImplementation "curse.maven:avaritia-universal-891434:6624830"
 	modImplementation("mezz.jei:jei-1.19.2-forge:11.8.1.1034") {transitive = false}
 	modImplementation "appeng:appliedenergistics2-forge:12.9.12"
@@ -202,6 +202,7 @@ publishMods {
 		minecraftVersions.add(mcVersion)
 		requires "packagedauto", "avaritia-universal"
 		optional "applied-energistics-2"
+		incompatible "re-avaritia", "avaritia-lite", "avaritia-reset-version"
 	}
 
 	modrinth {
@@ -210,5 +211,6 @@ publishMods {
 		minecraftVersions.add(mcVersion)
 		requires "packagedauto"
 		optional "ae2"
+		incompatible "re-avaritia"
 	}
 }

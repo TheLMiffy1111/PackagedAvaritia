@@ -1,2 +1,2 @@
-Adjust block strength values  
-Update Avaritia Universal  
+Add Avaritia variant check  
+Adjust textures  
