@@ -1,1 +1,2 @@
-Fix EMI recipe transfer  
+Add Avaritia variant check  
+Adjust textures  
