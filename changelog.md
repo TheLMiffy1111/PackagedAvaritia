@@ -1,2 +1,1 @@
-Add Avaritia variant check  
-Adjust textures  
+Update Avaritia Universal  
