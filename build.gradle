@@ -118,7 +118,7 @@ dependencies {
 
 	// Dependencies
 	modImplementation "thelm.packagedauto:PackagedAuto-1.18.2:3.1.15.60"
-	modImplementation "curse.maven:avaritia-endless-624491:6489780"
+	modImplementation "curse.maven:avaritia-endless-624491:6733571"
 	modImplementation("mezz.jei:jei-1.18.2-forge:10.2.1.1009") {transitive = false}
 	modImplementation "appeng:appliedenergistics2-forge:11.7.6"
 	modImplementation "vazkii.patchouli:Patchouli:1.18.2-71.1"
