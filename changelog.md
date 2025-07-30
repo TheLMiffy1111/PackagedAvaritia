@@ -1,1 +1,1 @@
-Fixed mineable tag  
+Fix loading table recipes into encoder  
