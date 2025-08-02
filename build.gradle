@@ -119,7 +119,7 @@ dependencies {
 	// Dependencies
 	implementation "thelm.packagedauto:PackagedAuto-1.21.1:4.0.5.14"
 	implementation "curse.maven:re-avaritia-623969:6640715"
-	implementation("mezz.jei:jei-1.21.1-neoforge:19.22.0.315") {transitive = false}
+	implementation("mezz.jei:jei-1.21.1-neoforge:19.22.1.316") {transitive = false}
 	implementation "org.appliedenergistics:appliedenergistics2:19.2.13"
 	implementation "curse.maven:ae2-jei-integration-1074338:5748513"
 	implementation "vazkii.patchouli:Patchouli:1.21-88-NEOFORGE"
