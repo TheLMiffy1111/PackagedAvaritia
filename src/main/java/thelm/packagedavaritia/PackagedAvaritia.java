@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thelm.packagedavaritia.block.BlockExtremeCrafter;
-import thelm.packagedavaritia.proxy.CommonProxy;
+import thelm.packagedavaritia.event.CommonEventHandler;
 
 @Mod(
 		modid = PackagedAvaritia.MOD_ID,
@@ -33,13 +33,13 @@ public class PackagedAvaritia {
 		}
 	};
 	@SidedProxy(
-			clientSide = "thelm.packagedavaritia.proxy.ClientProxy",
-			serverSide = "thelm.packagedavaritia.proxy.CommonProxy",
+			clientSide = "thelm.packagedavaritia.client.event.ClientEventHandler",
+			serverSide = "thelm.packagedavaritia.event.CommonEventHandler",
 			modId = PackagedAvaritia.MOD_ID)
-	public static CommonProxy proxy;
+	public static CommonEventHandler proxy;
 
 	@EventHandler
-	public void firstMovement(FMLPreInitializationEvent event) {
-		proxy.register(event);
+	public void onPreInit(FMLPreInitializationEvent event) {
+		proxy.onPreInit(event);
 	}
 }

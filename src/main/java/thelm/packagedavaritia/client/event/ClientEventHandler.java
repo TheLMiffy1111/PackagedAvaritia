@@ -1,13 +1,15 @@
-package thelm.packagedavaritia.proxy;
+package thelm.packagedavaritia.client.event;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import thelm.packagedauto.client.IModelRegister;
+import thelm.packagedavaritia.event.CommonEventHandler;
 
-public class ClientProxy extends CommonProxy {
+public class ClientEventHandler extends CommonEventHandler {
 
 	private static List<IModelRegister> modelRegisterList = new ArrayList<>();
 
@@ -28,6 +30,11 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
+	public void onPreInit(FMLPreInitializationEvent event) {
+		super.onPreInit(event);
+		registerModels();
+	}
+
 	protected void registerModels() {
 		for(IModelRegister model : modelRegisterList) {
 			model.registerModels();

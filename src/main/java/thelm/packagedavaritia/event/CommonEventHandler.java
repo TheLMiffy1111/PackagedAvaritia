@@ -1,4 +1,4 @@
-package thelm.packagedavaritia.proxy;
+package thelm.packagedavaritia.event;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -12,7 +12,7 @@ import thelm.packagedavaritia.config.PackagedAvaritiaConfig;
 import thelm.packagedavaritia.recipe.RecipeTypeExtreme;
 import thelm.packagedavaritia.tile.TileExtremeCrafter;
 
-public class CommonProxy {
+public class CommonEventHandler {
 
 	public void registerBlock(Block block) {
 		ForgeRegistries.BLOCKS.register(block);
@@ -22,11 +22,10 @@ public class CommonProxy {
 		ForgeRegistries.ITEMS.register(item);
 	}
 
-	public void register(FMLPreInitializationEvent event) {
+	public void onPreInit(FMLPreInitializationEvent event) {
 		registerConfig(event);
 		registerBlocks();
 		registerItems();
-		registerModels();
 		registerTileEntities();
 		registerRecipeTypes();
 	}
@@ -42,8 +41,6 @@ public class CommonProxy {
 	protected void registerItems() {
 		registerItem(BlockExtremeCrafter.ITEM_INSTANCE);
 	}
-
-	protected void registerModels() {}
 
 	protected void registerTileEntities() {
 		GameRegistry.registerTileEntity(TileExtremeCrafter.class, new ResourceLocation("packagedavaritia:extreme_crafter"));
