@@ -117,7 +117,7 @@ dependencies {
 	neoForge "net.neoforged:neoforge:21.1.194"
 
 	// Dependencies
-	implementation "thelm.packagedauto:PackagedAuto-1.21.1:4.0.5.14"
+	implementation "thelm.packagedauto:PackagedAuto-1.21.1:4.0.5.15"
 	implementation "curse.maven:avaritianeo-1083158:6578033"
 	implementation("mezz.jei:jei-1.21.1-neoforge:19.22.1.316") {transitive = false}
 	implementation "org.appliedenergistics:appliedenergistics2:19.2.13"
