@@ -73,7 +73,7 @@ def specVersion = "2"
 def vendor = "thelm"
 
 group = "thelm.packagedavaritia"
-version = "2.2.2.12"
+version = "2.2.2.13"
 
 def archivesName = "${modName}-${mcVersion}"
 base.archivesName = archivesName
@@ -119,7 +119,7 @@ dependencies {
 
 	// Dependencies
 	modImplementation "thelm.packagedauto:PackagedAuto-1.20.1:3.4.14.44"
-	modImplementation "curse.maven:re-avaritia-623969:6418092"
+	modImplementation "curse.maven:re-avaritia-623969:6958116"
 	modImplementation("mezz.jei:jei-1.20.1-forge:15.20.0.112") {transitive = false}
 	modImplementation "org.appliedenergistics:guideme:20.1.11"
 	modImplementation "appeng:appliedenergistics2-forge:15.4.6"

@@ -24,5 +24,5 @@ issueTrackerURL = "https://github.com/TheLMiffy1111/PackagedAvaritia/issues"
 
 [[dependencies.packagedavaritia]]
 	modId = "avaritia"
-	versionRange = "[1.3.9,)"
+	versionRange = "[1.3.9.1,)"
 	mandatory = true

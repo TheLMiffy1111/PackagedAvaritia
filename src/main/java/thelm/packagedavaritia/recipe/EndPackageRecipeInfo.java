@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import committee.nova.mods.avaritia.common.crafting.recipe.BaseTableCraftingRecipe;
+import committee.nova.mods.avaritia.common.crafting.recipe.ITierCraftingRecipe;
 import committee.nova.mods.avaritia.init.registry.ModRecipeTypes;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -23,7 +23,7 @@ import thelm.packagedauto.util.PackagePattern;
 
 public class EndPackageRecipeInfo implements ITablePackageRecipeInfo {
 
-	BaseTableCraftingRecipe recipe;
+	ITierCraftingRecipe recipe;
 	List<ItemStack> input = new ArrayList<>();
 	Container matrix = new SimpleContainer(49);
 	ItemStack output;
@@ -40,7 +40,7 @@ public class EndPackageRecipeInfo implements ITablePackageRecipeInfo {
 		for(int i = 0; i < 49 && i < matrixList.size(); ++i) {
 			matrix.setItem(i, matrixList.get(i));
 		}
-		if(recipe instanceof BaseTableCraftingRecipe tableRecipe) {
+		if(recipe instanceof ITierCraftingRecipe tableRecipe) {
 			this.recipe = tableRecipe;
 			output = this.recipe.assemble(matrix, MiscHelper.INSTANCE.getRegistryAccess()).copy();
 		}
@@ -94,7 +94,7 @@ public class EndPackageRecipeInfo implements ITablePackageRecipeInfo {
 	}
 
 	@Override
-	public BaseTableCraftingRecipe getRecipe() {
+	public ITierCraftingRecipe getRecipe() {
 		return recipe;
 	}
 
@@ -119,7 +119,7 @@ public class EndPackageRecipeInfo implements ITablePackageRecipeInfo {
 			toSet.setCount(1);
 			matrix.setItem(i, toSet.copy());
 		}
-		BaseTableCraftingRecipe recipe = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(ModRecipeTypes.CRAFTING_TABLE_RECIPE.get(), matrix, level).orElse(null);
+		ITierCraftingRecipe recipe = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(ModRecipeTypes.CRAFTING_TABLE_RECIPE.get(), matrix, level).orElse(null);
 		if(recipe != null) {
 			this.recipe = recipe;
 			this.input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));
